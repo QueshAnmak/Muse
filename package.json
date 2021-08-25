@@ -1,0 +1,23 @@
+{
+  "name": "meet-bot",
+  "version": "1.0.0",
+  "description": "A bot that uses Playwright to play music in google meets.",
+  "main": "youtube.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/QueshAnmak/meet-bot.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/QueshAnmak/meet-bot/issues"
+  },
+  "homepage": "https://github.com/QueshAnmak/meet-bot#readme",
+  "devDependencies": {
+    "playwright": "^1.14.1"
+  }
+}
