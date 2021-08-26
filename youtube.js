@@ -60,7 +60,7 @@ const pause = async(page) => {
     }
 }
 
-const play = async(page) => {
+const resume = async(page) => {
 
     // if player is paused then play, else nobody cares
     if (await page.getAttribute('#play-pause-button', 'title') == 'Play')
@@ -82,7 +82,7 @@ async function main() {
     await page.waitForTimeout(10000)
     await pause(page)
     await page.waitForTimeout(10000)
-    await play(page)
+    await resume(page)
     await page.waitForTimeout(10000)
     await toggle(page)
 }
