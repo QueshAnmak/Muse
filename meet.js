@@ -4,7 +4,6 @@ const startMeet = async(meetLink) => {
 
     const browser = await playwright.chromium.launch({
         headless: false,
-        channel: 'msedge',
     })
 
     console.log("Browser started.")
@@ -35,7 +34,7 @@ const startMeet = async(meetLink) => {
 
 async function main() {
 
-    const meet = startMeet("https://meet.google.com/roj-hstc-wyi")
+    const meet = startMeet("https://meet.google.com/tay-pnaj-jgf")
 }
 
 main()
