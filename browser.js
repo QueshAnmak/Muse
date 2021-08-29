@@ -1,4 +1,5 @@
 const playwright = require('playwright');
+const {startMeet} = require('./meet')
 
 async function startBrowser() {
 
@@ -17,7 +18,7 @@ async function startBrowser() {
         args: [
 			`--disable-extensions-except=${adguard}`,
 			`--load-extension=${adguard}`,
-            '--auto-select-desktop-capture-source=Youtube'
+            '--auto-select-desktop-capture-source=Meet'
         ],
         colorScheme: 'dark',
         viewport: null,

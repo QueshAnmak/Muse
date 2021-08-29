@@ -33,12 +33,12 @@ async function startMeet(browser, meetLink) {
     return meet
 }
 
-async function main() {
+// async function main() {
 
-    const meet = startMeet("https://meet.google.com/fox-xdrt-nhs")
-}
+//     const meet = startMeet("https://meet.google.com/fox-xdrt-nhs")
+// }
 
-main()
+// main()
 
 module.exports = {
     startMeet

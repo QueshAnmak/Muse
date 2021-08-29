@@ -94,4 +94,4 @@ async function main() {
     await toggle(ymusic)
 }
 
-main()
+// main()
