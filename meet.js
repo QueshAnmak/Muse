@@ -1,60 +1,45 @@
-const playwright = require('playwright')
-
-const startMeet = async(meetLink) => {
-
-    const userDataDir = './gooogle';
-    
-    const browser = await playwright.chromium.launchPersistentContext(userDataDir,{
-        headless: false,
-        permissions: ['notifications', 'microphone', 'camera', 'geolocation'],
-        args: [
-          `--disable-blink-features, 
-          --start-maximized`
-        ],
-        colorScheme: 'dark',
-        storageState: './state.json',
-        userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4595.0 Safari/537.36',
-        locale: 'en-US',
-        timezoneId: 'Asia/Kolkata',
-    });
-    
-    console.log("Browser started.")
+async function startMeet(browser, meetLink) {
 
     // open google meet
+    console.log("fuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuck")
+    console.log(typeof(browser))
     const meet = await browser.newPage()
     await meet.goto(meetLink)
 
-    console.log("Open google meet.")
+    console.log("Opened google meet.")
 
-    // 'therealmeetbot@gmail.com', 'playthatfunkymusicwhiteboy'
-
-    // sign in
-
-    // await meet.fill('[aria-label="Email or phone"]', 'therealmeetbot@gmail.com')
-    // await meet.click('button:has-text("Next")')
-
-    // await meet.fill('[aria-label="Enter your password"]', 'playthatfunkymusicwhiteboy')
-    // await meet.click('button:has-text("Next")')
-
-    console.log("Signed in.")
-
-    // turn off mic and video and join meeting
+    // turn off mic and video
     await meet.click('[aria-label="Turn off microphone (CTRL + D)"]')
     await meet.click('[aria-label="Turn off camera (CTRL + E)"]')
+
+    console.log('Turned mic and camera off.')
+
+    // join meeting
     await meet.click('div[jsname="Qx7uuf"]')
+
+    console.log('Joined meeting.')
+
+    // open chat box
     await meet.click('text=chatchat_bubble')
+
+    console.log('Opened chat box.')
+
+    // present youtube music tab
     await meet.click('[aria-label="Present now"]')
+    await meet.click('li[role="menuitem"]:has-text("A tabBest for video and animation")')
+
+    console.log('Presenting Youtube Music tab.')
     
-    await browser.storageState({ path: './state.json' });
+    return meet
 }
 
 async function main() {
 
-<<<<<<< HEAD
-    const meet = startMeet("https://meet.google.com/tay-pnaj-jgf")
-=======
-    const meet = startMeet("https://meet.google.com/cnb-fvxd-rik")
->>>>>>> c4799e0f77f275f9b2fa3cdcec95c33933e15a28
+    const meet = startMeet("https://meet.google.com/fox-xdrt-nhs")
 }
 
 main()
+
+module.exports = {
+    startMeet
+}
