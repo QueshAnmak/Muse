@@ -35,18 +35,19 @@ async function playSong(ymusic, songName) {
     console.log('Results Loaded')
 
     // find and click the 1st song in Songs list
-    await ymusic.evaluate(`
-    var songSelect = null;
-    for (var idx = 0; idx < 10; idx++) // change to while loop
-    {
-        songSelect = document.querySelectorAll('ymusicusic-shelf-renderer')[idx].querySelector("h2");
-        
-        if (songSelect.innerText == "Songs")
-            break;
-    }
+    await ymusic.evaluate( async () => { 
+    
+        var songSelect = null;
+        for (var idx = 0; idx < 10; idx++) // change to while loop
+        {
+            songSelect = document.querySelectorAll('ytmusic-shelf-renderer')[idx].querySelector("h2");
+            
+            if (songSelect.innerText == "Songs")
+                break;
+        }
 
-    songSelect.parentElement.children[3].children[0].children[1].children[4].children[1].children[0].click()
-    `)
+        songSelect.parentElement.children[3].children[0].children[1].children[4].children[1].children[0].click()
+    })
 
     console.log(`Now Playing - ${songName}`)
 } // to-do: remove evaluate, return details of played song
@@ -80,13 +81,18 @@ async function toggle(ymusic) {
 // testing function, to be removed in production
 async function main() {
 
-    const ymusic = await startMusic()
+    const { startBrowser } = require('./browser')
+    
+    const browser = await startBrowser()
+    const ymusic = await startYMusic(browser)
+    
     await playSong(ymusic, "in my place")
     await ymusic.waitForTimeout(10000)
     await playSong(ymusic, "ink coldplay")
     await ymusic.waitForTimeout(10000)
     await playSong(ymusic, "darkside")
     await ymusic.waitForTimeout(10000)
+    
     await pause(ymusic)
     await ymusic.waitForTimeout(10000)
     await resume(ymusic)

@@ -1,3 +1,5 @@
+const {processCommand} = require('./commands')
+
 async function startMeet(browser, meetLink) {
 
     // open google meet
@@ -31,6 +33,41 @@ async function startMeet(browser, meetLink) {
     return meet
 }
 
+async function monitorMeetChat(meet, ymusic) {
+
+    const divHandle = await meet.$('.z38b6[jsname="xySENc"]')
+    let anotherDivHandle ;
+
+	const sendForProcessing = async (message) => {
+		return await processCommand(message, ymusic)
+	}
+
+	// await meet.exposeFunction('processCommand', processCommand)
+	await meet.exposeFunction('sendForProcessing', sendForProcessing)
+
+    await divHandle.evaluate(div => {
+		
+		new MutationObserver(async (mutationsList, observer) => {
+
+			anotherDivHandle = mutationsList[0].addedNodes[0]
+			
+			if (anotherDivHandle === undefined) return;
+
+			else if(anotherDivHandle.className === 'GDhqjd'){
+				anotherDivHandle = anotherDivHandle.childNodes[1]
+			}
+
+			let message = anotherDivHandle.innerText
+
+			// const ymusic = await getYmusic()
+			let result = await sendForProcessing(message);
+			console.log(result);
+
+      	}).observe(div, { childList: true, subtree: true });
+    });
+} // add comments @DhairyaBahl
+
 module.exports = {
-    startMeet
+    startMeet,
+    monitorMeetChat,
 }

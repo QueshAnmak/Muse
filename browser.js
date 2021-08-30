@@ -30,6 +30,7 @@ async function startBrowser() {
     await browser.storageState({ path: './state.json' });
     
     console.log("Browser started.")
+
     return browser
 }
 

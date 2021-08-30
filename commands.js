@@ -1,6 +1,8 @@
-async function processCommand(ymusic,message) {
+const { playSong } = require('./youtube.js')
 
-    await playSong(ymusic,message);
+async function processCommand(message, ymusic) {
+
+    await playSong(ymusic, message);
 
     console.log(message+"!!!!!")
     return "working!"

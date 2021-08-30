@@ -1,55 +1,22 @@
-const { startBrowser } = require('./browser')
-const { startMeet } = require('./meet')
-const { startYMusic, playSong } = require('./youtube')
-const { processCommand } = require('./commands')
+const { startBrowser } = require('./browser');
+const { googleSignIn } = require('./login');
+const { startMeet, monitorMeetChat } = require('./meet');
+const { startYMusic } = require('./youtube');
 
-async function main() {
-
+(async () => {
+	// start browser
     const browser = await startBrowser()
-    // await googleSignIn(browser, 'therealmeetbot@gmail.com', 'playthatfunkymusicwhiteboy')
-    const meetLink = "https://meet.google.com/jbu-nayj-rpy"
+
+	// confirm bot is signed in, if not then sign in
+	// await googleSignIn(browser, 'therealmeetbot', 'playthatfunkymusicwhiteboy')
+
+	// open ytmusic, open meet, cast ytmusic to meet
+    const meetLink = "https://meet.google.com/wti-ctsz-djp" // for now take input
     const ymusic = await startYMusic(browser)
     const meet = await startMeet(browser, meetLink);
     
-    const divHandle = await meet.$('.z38b6[jsname="xySENc"]')
-    let anotherDivHandle ;
+    // Monitor the meet chat for commands, send commands for command processing 
+	await monitorMeetChat(meet, ymusic) // improvement required
+	
 
-	const someFunction = async (message) => {
-		playSong(ymusic,message)
-	}
-
-	await meet.exposeFunction('processCommand', processCommand)
-	await meet.exposeFunction('playSong', playSong)
-	await meet.exposeFunction('someFunction', someFunction)
-
-    await divHandle.evaluate(div => {
-
-		new MutationObserver(async (mutationsList, observer) => {
-
-			anotherDivHandle = mutationsList[0].addedNodes[0]
-			
-			if (anotherDivHandle === undefined) return;
-
-			if(anotherDivHandle.className === 'GDhqjd'){
-				anotherDivHandle = anotherDivHandle.childNodes[1]
-			}
-
-			anotherDivHandle = anotherDivHandle.innerText
-
-			let message = anotherDivHandle;
-
-			console.log(message);
-			// let result = await processCommand(ymusic,message);
-			// await playSong(ymusic,message);
-			await someFunction(message);
-			// console.log(result);
-
-
-      }).observe(div, { childList: true, subtree: true });
-
-
-      });
-
-}
-
-main()
+})();
