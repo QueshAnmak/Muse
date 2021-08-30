@@ -97,5 +97,9 @@ async function main() {
 // main()
 
 module.exports = {
-    startYMusic
+    startYMusic, 
+    playSong, 
+    pause, 
+    resume, 
+    toggle
 }
