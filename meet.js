@@ -1,8 +1,6 @@
 async function startMeet(browser, meetLink) {
 
     // open google meet
-    console.log("fuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuck")
-    console.log(typeof(browser))
     const meet = await browser.newPage()
     await meet.goto(meetLink)
 
