@@ -1,6 +1,8 @@
-async function processCommand(message) {
+async function processCommand(ymusic,message) {
 
-    console.log(message)
+    await playSong(ymusic,message);
+
+    console.log(message+"!!!!!")
     return "working!"
 }
 
