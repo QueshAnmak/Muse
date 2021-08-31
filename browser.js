@@ -2,14 +2,14 @@ const playwright = require('playwright');
 
 async function startBrowser() {
 
-    const userDataDir = './session';
+    const userDataDir = './session1';
 
 	// extension to remove ads
 	const adguard = require('path').join(__dirname, 'adguard');
 
     const browser = await playwright.chromium.launchPersistentContext(userDataDir,{
         headless: false,
-        channel: 'msedge',
+        channel: 'chrome',
         permissions: ['camera','microphone',],
         ignoreDefaultArgs: [
             '--disable-component-extensions-with-background-pages',

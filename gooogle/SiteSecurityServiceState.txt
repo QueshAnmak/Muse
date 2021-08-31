@@ -1,7 +1,0 @@
-aus5.mozilla.org:HSTS	0	18866	1661597257918,1,0,2
-meet.google.com^partitionKey=%28http%2Cgoogle.com%29:HSTS	0	18866	1661597286807,1,0,2
-myaccount.google.com^partitionKey=%28http%2Cgoogle.com%29:HSTS	0	18866	1661597204310,1,0,2
-signaler-pa.clients6.google.com^partitionKey=%28http%2Cgoogle.com%29:HSTS	0	18866	1640947653408,1,1,2
-ogs.google.com^partitionKey=%28http%2Cgoogle.com%29:HSTS	0	18866	1661597254065,1,0,2
-accounts.google.com^partitionKey=%28http%2Cgoogle.com%29:HSTS	0	18866	1661597199341,1,1,2
-location.services.mozilla.com:HSTS	0	18866	1661596906019,1,1,2
