@@ -4,9 +4,9 @@ A bot that uses Playwright to play music in google meets.
 
 # Commands
 
--   `/play` \<songName>
+-   `/play` `<songName>`
     - description - Plays a song.
--   `/p` \<songName>
+-   `/p` `<songName>`
     - Also...plays a song.
 -   `/pause` 
 	- C'mon, it's in the name.
