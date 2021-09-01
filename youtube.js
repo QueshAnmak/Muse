@@ -172,6 +172,8 @@ async function getCurrentSong(ymusic) {
 	return songData;
 }
 
+// refactor the three functions below into single function.
+
 /**
  * If player is playing then pause, else nobody cares.
  * @param {page} ymusic
