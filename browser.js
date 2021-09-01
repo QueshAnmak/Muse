@@ -10,7 +10,8 @@ async function startBrowser() {
 		userDataDir,
 		{
 			headless: false,
-			channel: "chrome",
+			devtools: true, // turn off later
+			channel: "msedge",
 			permissions: ["camera", "microphone"],
 			ignoreDefaultArgs: [
 				"--disable-component-extensions-with-background-pages",
@@ -33,10 +34,16 @@ async function startBrowser() {
 	await browser.storageState({ path: "./state.json" });
 
 	console.log("Browser started.");
-
 	return browser;
+}
+
+async function closeBrowser(browser) {
+
+	console.log('Closing Browser.');
+	await browser.close();
 }
 
 module.exports = {
 	startBrowser,
+	closeBrowser,
 };
