@@ -116,7 +116,7 @@ async function presentToMeet(meet, spotlight = true, audio = true) {
 	}
 
 	console.log("Presenting Youtube Music tab.");
-}
+} // headless mode not working, fix if possible
 
 async function forcePresentToMeet(meet) {
 	const isItShowtime = await meet.evaluate(async () => {

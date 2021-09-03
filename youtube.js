@@ -1,6 +1,7 @@
-// import * as pw from 'playwright';
+// adblocking node module - https://github.com/cliqz-oss/adblocker
 const { PlaywrightBlocker } = require('@cliqz/adblocker-playwright');
-const fetch = require('cross-fetch').fetch; // required 'fetch'
+const fetch = require('cross-fetch').fetch;
+
 
 async function startYMusic(browser) {
 	// open ymusic
@@ -11,27 +12,10 @@ async function startYMusic(browser) {
 
 	console.log("Youtube Music opened.");
 	return ymusic;
-} // headless mode not working, fix
+}
 
 async function blockAdsYTmusic(ymusic) {
-	// const AD_CHECK_EXP = new RegExp("(googleads|pubads|adsense|pagead|doubleclick|syndication)");
 
-	// await ymusic.route("**/*", (route) => {
-
-	// 	// console.log(AD_CHECK_EXP.test(route.request().url()));
-
-	// 	let match = AD_CHECK_EXP.test(route.request().url());
-	// 	if (match)
-	// 	{
-	// 		// console.log('aborted');
-	// 		return route.abort()
-	// 	}
-	// 	else
-	// 	{
-	// 		// console.log('ok, np');
-	// 		return route.continue();
-	// 	}
-	// });
 	PlaywrightBlocker.fromPrebuiltAdsAndTracking(fetch).then((blocker) => {
 		blocker.enableBlockingInPage(ymusic);
 	  });
