@@ -1,11 +1,25 @@
+// adblocking node module - https://github.com/cliqz-oss/adblocker
+const { PlaywrightBlocker } = require('@cliqz/adblocker-playwright');
+const fetch = require('cross-fetch').fetch;
+
+
 async function startYMusic(browser) {
 	// open ymusic
 	const ymusic = await browser.newPage();
 	await ymusic.goto("https://music.youtube.com");
 
+	await blockAdsYTmusic(ymusic);
+
 	console.log("Youtube Music opened.");
 	return ymusic;
-} // headless mode not working, fix
+}
+
+async function blockAdsYTmusic(ymusic) {
+
+	PlaywrightBlocker.fromPrebuiltAdsAndTracking(fetch).then((blocker) => {
+		blocker.enableBlockingInPage(ymusic);
+	  });
+}
 
 /**
  *

@@ -6,24 +6,26 @@ async function startBrowser() {
 	// extension to remove ads
 	const adguard = require("path").join(__dirname, "adguard");
 
-	const browser = await playwright.chromium.launchPersistentContext(
-		userDataDir,
+	const browser = await playwright.chromium.launch({
+		headless: false,
+		// devtools: true, // turn off later
+		channel: "msedge",
+		ignoreDefaultArgs: [
+			"--disable-component-extensions-with-background-pages",
+		],
+		args: [
+			`--disable-extensions-except=${adguard}`,
+			`--load-extension=${adguard}`,
+			"--auto-select-desktop-capture-source=YouTube",
+		],
+	})
+	
+	const browserContext = browser.newContext(
 		{
-			headless: false,
-			devtools: true, // turn off later
-			channel: "msedge",
-			permissions: ["camera", "microphone"],
-			ignoreDefaultArgs: [
-				"--disable-component-extensions-with-background-pages",
-			],
-			args: [
-				`--disable-extensions-except=${adguard}`,
-				`--load-extension=${adguard}`,
-				"--auto-select-desktop-capture-source=YouTube",
-			],
 			colorScheme: "dark",
 			viewport: null,
-			storageState: "./state.json",
+			permissions: ["camera", "microphone"],
+			storageState: "./auth.json",
 			userAgent:
 				"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4595.0 Safari/537.36",
 			locale: "en-US",
@@ -31,10 +33,8 @@ async function startBrowser() {
 		}
 	);
 
-	await browser.storageState({ path: "./state.json" });
-
 	console.log("Browser started.");
-	return browser;
+	return browserContext;
 }
 
 async function closeBrowser(browser) {
