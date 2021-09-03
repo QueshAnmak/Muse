@@ -24,7 +24,7 @@ async function startBrowser() {
 		{
 			colorScheme: "dark",
 			viewport: null,
-			permissions: ["camera", "microphone"],
+			permissions: [],//["camera", "microphone"],
 			storageState: "./auth.json",
 			userAgent:
 				"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4595.0 Safari/537.36",

@@ -6,23 +6,34 @@
  */
 async function joinMeet(browser, meetLink) {
 	// open google meet
-	const meet = await browser.newPage();
+	const meet = await browser.newPage({ deviceScaleFactor: 0.5 });
 	await meet.goto(meetLink);
 
 	console.log("Opened google meet.");
 
-	// turn off mic and video
-	await meet.click('[aria-label="Turn off microphone (CTRL + D)"]');
-	await meet.click('[aria-label="Turn off camera (CTRL + E)"]');
-
-	console.log("Turned mic and camera off.");
+	// dismiss popup
+	await meet.click('#yDmH0d > div.llhEMd.iWO5td > div > div.g3VIld.vdySc.Up8vH.J9Nfi.iWO5td > div.XfpsVe.J9fJmf > div');
 
 	// join meeting, will wait indefinitely
 	await meet.click('div[jsname="Qx7uuf"]', { timeout: 0 });
 
-	// wait for meet to load
-	await meet.waitForSelector(".SQHmX");
+	// turn off mic and video
+	// await meet.click('[aria-label="Turn off microphone (CTRL + D)"]');
+	// await meet.click('[aria-label="Turn off camera (CTRL + E)"]');
+	
+	console.log("Turned mic and camera off.");
 
+	// wait for meet to load
+	try {
+		await meet.waitForSelector(".SQHmX");
+	}
+	catch (e) {
+		await meet.click('#yDmH0d > div.llhEMd.iWO5td > div > div.g3VIld.vdySc.pMgRYb.Up8vH.J9Nfi.iWO5td > div.XfpsVe.J9fJmf > div')
+	}
+	finally {
+		await meet.waitForSelector(".SQHmX");
+	}
+	
 	console.log("Joined meeting.");
 	return meet;
 }
@@ -83,35 +94,20 @@ async function presentToMeet(meet, spotlight = true, audio = true) {
 	await meet.waitForSelector('[aria-label="Participants"]');
 
 	// unpin and pin the presentation on meet page to permanently pin it locally
-	await meet.evaluate(async () => {
-		const pinButton = document
-			.querySelector('[aria-label="Participants"]')
-			.querySelector(
-				'[aria-label="Unpin your presentation from your main screen."]'
-			);
-		pinButton.click();
-		pinButton.click();
-	});
+	await (await meet.locator('[aria-label="Participants"]')).click('[aria-label="Unpin your presentation from your main screen."]');
+	await (await meet.locator('[aria-label="Participants"]')).click('[aria-label="Unpin your presentation from your main screen."]');
 
 	// to put screen share out of spotlight
 	console.log("Checking spotlight.");
 	if (spotlight === false) {
-		const browser = await meet.context();
-		const meetLink = await meet.url();
-		const dummyMeet = await joinMeet(browser, meetLink);
-
-		// present tab to meet
-		await forcePresentToMeet(dummyMeet);
-		await dummyMeet.close();
-
-		console.log(`Turned spotlight off.`);
+		await turnSpotlightOff(meet);
 	}
 
 	// removing from spotlight turns audio off, to fix it audio must be turned
 	// back on manually
 	console.log("Checking audio.");
 	if ((audio = true)) {
-		const result = await setPresentationAudioState(meet, (setState = "on"));
+		let result = await setPresentationAudioState(meet, (setState = "on"));
 		console.log(result);
 	}
 
@@ -159,6 +155,18 @@ async function forcePresentToMeet(meet) {
 	return "Mission F****** Accomplished!!!";
 }
 
+async function turnSpotlightOff(meet) {
+	const browser = await meet.context();
+	const meetLink = await meet.url();
+	const dummyMeet = await joinMeet(browser, meetLink);
+
+	// present tab to meet
+	await forcePresentToMeet(dummyMeet);
+	await dummyMeet.close();
+
+	console.log(`Turned spotlight off.`);
+}
+
 /**
  *
  * @param {*} meet
@@ -169,9 +177,9 @@ async function setPresentationAudioState(meet, setState = "on") {
 	// check setState is valid
 	if (!VALID_STATES.includes(setState)) return "Invalid setState!!!";
 
-	await meet.waitForSelector('[data-allocation-index="0"]');
+	await meet.waitForSelector('[aria-label$="ute your presentation"]');
 
-	const audioButton = await (await meet.$('[data-allocation-index="0"]')).$('[jsname="LgbsSe"]');
+	const audioButton = await meet.locator('[aria-label$="ute your presentation"]');
 
 	const curState =
 		(await audioButton.getAttribute("aria-label")) ===
