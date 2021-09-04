@@ -1,9 +1,5 @@
-// adblocking node module - https://github.com/cliqz-oss/adblocker
-const { PlaywrightBlocker } = require('@cliqz/adblocker-playwright');
-const fetch = require('cross-fetch').fetch;
-
-
-async function startYMusic(browser) {
+async function startYMusic(browser)
+{
 	// open ymusic
 	const ymusic = await browser.newPage();
 	await ymusic.goto("https://music.youtube.com");
@@ -14,11 +10,16 @@ async function startYMusic(browser) {
 	return ymusic;
 }
 
-async function blockAdsYTmusic(ymusic) {
+async function blockAdsYTmusic(ymusic)
+{
+	// adblocking node module - https://www.npmjs.com/package/@cliqz/adblocker-playwright
+	const { PlaywrightBlocker } = require('@cliqz/adblocker-playwright');
+	const fetch = require('cross-fetch').fetch;
 
-	PlaywrightBlocker.fromPrebuiltAdsAndTracking(fetch).then((blocker) => {
+	PlaywrightBlocker.fromPrebuiltAdsAndTracking(fetch).then((blocker) =>
+	{
 		blocker.enableBlockingInPage(ymusic);
-	  });
+	});
 }
 
 /**
@@ -29,7 +30,8 @@ async function blockAdsYTmusic(ymusic) {
  * select, defaults to song.
  * @returns
  */
-async function playMusic(ymusic, query, musicType = "song") {
+async function playMusic(ymusic, query, musicType = "song")
+{
 	console.log(`Attempting to play ${query}.`);
 
 	// search query
@@ -51,7 +53,8 @@ async function playMusic(ymusic, query, musicType = "song") {
  * @param {string} query
  * @returns
  */
-async function searchQuery(ymusic, query) {
+async function searchQuery(ymusic, query)
+{
 	// wait for search bar to load, just in case
 	await ymusic.waitForSelector('tp-yt-paper-icon-button[role="button"]');
 
@@ -79,7 +82,8 @@ async function searchQuery(ymusic, query) {
 		"#search-page > ytmusic-tabbed-search-results-renderer > div.content.style-scope.ytmusic-tabbed-search-results-renderer"
 	);
 
-	if ((await ymusic.$("text=Top result")) === null) {
+	if ((await ymusic.$("text=Top result")) === null)
+	{
 		console.log("No results.");
 		return "No results.";
 	}
@@ -93,8 +97,10 @@ async function searchQuery(ymusic, query) {
  * @param {'song'|'playlist'|'artist'|'album'} musicType - The type of result to
  * select, defaults to song.
  */
-async function decideMusic(ymusic, musicType = "") {
-	await ymusic.evaluate(async (musicType) => {
+async function decideMusic(ymusic, musicType = "")
+{
+	await ymusic.evaluate(async (musicType) =>
+	{
 		// currently artist plays song too
 		if (musicType === "artist") musicType = "songs";
 
@@ -111,25 +117,31 @@ async function decideMusic(ymusic, musicType = "") {
 			)
 			.querySelector(" .ytmusic-play-button-renderer ");
 
-		if (topResult.musicType.toLowerCase() === musicType) {
+		if (topResult.musicType.toLowerCase() === musicType)
+		{
 			await topResult.playButton.click();
-		} else {
+		} else
+		{
 			if (musicType === "playlist") musicType = "featured playlists";
-			else {
+			else
+			{
 				musicType += "s";
 			}
 
 			// get all titles, store in object
-			const getTitlesList = async () => {
+			const getTitlesList = async () =>
+			{
 				const titles = await document
 					.querySelector(
 						" .content.style-scope.ytmusic-tabbed-search-results-renderer "
 					)
 					.querySelectorAll(" h2 ");
 				const titleSelectors = {};
-				for (idx in titles) {
+				for (idx in titles)
+				{
 					var titleName = titles[idx].innerText;
-					if (typeof titleName == "string") {
+					if (typeof titleName == "string")
+					{
 						var firstItemPlayButton = await titles[
 							idx
 						].parentElement.querySelector(
@@ -143,9 +155,11 @@ async function decideMusic(ymusic, musicType = "") {
 			};
 			const titlesList = await getTitlesList();
 
-			if (titlesList[musicType] !== undefined) {
+			if (titlesList[musicType] !== undefined)
+			{
 				await titlesList[musicType].click();
-			} else {
+			} else
+			{
 				await topResult.playButton.click();
 			}
 		}
@@ -157,17 +171,20 @@ async function decideMusic(ymusic, musicType = "") {
  * @param {*} ymusic
  * @returns
  */
-async function getCurrentSong(ymusic) {
+async function getCurrentSong(ymusic)
+{
 	await ymusic.waitForSelector(
 		'yt-formatted-string[class="byline style-scope ytmusic-player-bar complex-string"]'
 	);
 
-	const songName = await ymusic.evaluate(async () => {
+	const songName = await ymusic.evaluate(async () =>
+	{
 		return await document.querySelector(
 			'yt-formatted-string[class="title style-scope ytmusic-player-bar"]'
 		).title;
 	});
-	const { songArtist, songAlbum } = await ymusic.evaluate(async () => {
+	const { songArtist, songAlbum } = await ymusic.evaluate(async () =>
+	{
 		const otherData = await document.querySelector(
 			'yt-formatted-string[class="byline style-scope ytmusic-player-bar complex-string"]'
 		);
@@ -193,12 +210,15 @@ async function getCurrentSong(ymusic) {
  * @param {page} ymusic
  * @returns
  */
-async function pauseMusic(ymusic) {
-	if ((await ymusic.getAttribute("#play-pause-button", "title")) == "Pause") {
+async function pauseMusic(ymusic)
+{
+	if ((await ymusic.getAttribute("#play-pause-button", "title")) == "Pause")
+	{
 		await ymusic.click("#play-pause-button");
 		console.log("Paused!");
 		return "Paused!";
-	} else {
+	} else
+	{
 		console.log("Already paused!");
 		return "Already paused!";
 	}
@@ -209,12 +229,15 @@ async function pauseMusic(ymusic) {
  * @param {page} ymusic
  * @returns
  */
-async function resumeMusic(ymusic) {
-	if ((await ymusic.getAttribute("#play-pause-button", "title")) == "Play") {
+async function resumeMusic(ymusic)
+{
+	if ((await ymusic.getAttribute("#play-pause-button", "title")) == "Play")
+	{
 		await ymusic.click("#play-pause-button");
 		console.log("Resumed!");
 		return "Resumed!";
-	} else {
+	} else
+	{
 		console.log("Already playing!");
 		return "Already playing!";
 	}
@@ -225,24 +248,28 @@ async function resumeMusic(ymusic) {
  * @param {page} ymusic
  * @returns
  */
-async function toggleMusic(ymusic) {
+async function toggleMusic(ymusic)
+{
 	await ymusic.click("#play-pause-button");
 	const playerState = await ymusic.getAttribute(
 		"#play-pause-button",
 		"title"
 	);
 
-	if (playerState == "Play") {
+	if (playerState == "Play")
+	{
 		console.log("Resumed!");
 		return "Resumed!";
-	} else {
+	} else
+	{
 		console.log("Paused!");
 		return "Paused!";
 	}
 }
 
 // testing function, to be removed in production
-async function main() {
+async function main()
+{
 	const { startBrowser } = require("./browser");
 
 	const browser = await startBrowser();

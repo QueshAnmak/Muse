@@ -4,7 +4,8 @@
  * @param {string} meetLink
  * @returns
  */
-async function joinMeet(browser, meetLink) {
+async function joinMeet(browser, meetLink)
+{
 	// open google meet
 	const meet = await browser.newPage({ deviceScaleFactor: 0.5 });
 	await meet.goto(meetLink);
@@ -20,20 +21,23 @@ async function joinMeet(browser, meetLink) {
 	// turn off mic and video
 	// await meet.click('[aria-label="Turn off microphone (CTRL + D)"]');
 	// await meet.click('[aria-label="Turn off camera (CTRL + E)"]');
-	
+
 	console.log("Turned mic and camera off.");
 
 	// wait for meet to load
-	try {
+	try
+	{
 		await meet.waitForSelector(".SQHmX");
 	}
-	catch (e) {
-		await meet.click('#yDmH0d > div.llhEMd.iWO5td > div > div.g3VIld.vdySc.pMgRYb.Up8vH.J9Nfi.iWO5td > div.XfpsVe.J9fJmf > div')
+	catch (e)
+	{
+		await meet.click('#yDmH0d > div.llhEMd.iWO5td > div > div.g3VIld.vdySc.pMgRYb.Up8vH.J9Nfi.iWO5td > div.XfpsVe.J9fJmf > div');
 	}
-	finally {
+	finally
+	{
 		await meet.waitForSelector(".SQHmX");
 	}
-	
+
 	console.log("Joined meeting.");
 	return meet;
 }
@@ -44,8 +48,9 @@ async function joinMeet(browser, meetLink) {
  * @param {'opened'|'closed'|'toggled'} setState
  * @returns
  */
-async function setMeetChatBoxState(meet, setState = "opened") {
-	
+async function setMeetChatBoxState(meet, setState = "opened")
+{
+
 	const VALID_STATES = ["opened", "closed", "toggled"];
 	let result;
 
@@ -63,15 +68,16 @@ async function setMeetChatBoxState(meet, setState = "opened") {
 		curState = 'opened';
 	else
 		curState = 'closed';
-	
+
 	// bring chatBox to setState
-	if (curState === setState) {
+	if (curState === setState)
+	{
 		result = `Chatbox already ${setState}.`;
-	} else {
+	} else
+	{
 		await chatBox.click();
-		result = `${
-			setState.charAt(0).toUpperCase() + setState.slice(1)
-		} the chatbox.`;
+		result = `${setState.charAt(0).toUpperCase() + setState.slice(1)
+			} the chatbox.`;
 	}
 
 	console.log(result);
@@ -85,28 +91,23 @@ async function setMeetChatBoxState(meet, setState = "opened") {
  * @param {boolean} spolight - if set to false, presentation will not be spotlighted.
  * @param {boolean} audio - if set false, presentaion audio will be turned off.
  */
-async function presentToMeet(meet, spotlight = true, audio = true) {
+async function presentToMeet(meet, spotlight = true, audio = true)
+{
 	// present tab to meet, whatever it takes
 	await forcePresentToMeet(meet);
 
-	// open participants list
-	await meet.click('[aria-label="Show everyone"]');
-	await meet.waitForSelector('[aria-label="Participants"]');
-
-	// unpin and pin the presentation on meet page to permanently pin it locally
-	await (await meet.locator('[aria-label="Participants"]')).click('[aria-label="Unpin your presentation from your main screen."]');
-	await (await meet.locator('[aria-label="Participants"]')).click('[aria-label="Unpin your presentation from your main screen."]');
-
 	// to put screen share out of spotlight
 	console.log("Checking spotlight.");
-	if (spotlight === false) {
+	if (spotlight === false)
+	{
 		await turnSpotlightOff(meet);
 	}
 
 	// removing from spotlight turns audio off, to fix it audio must be turned
 	// back on manually
 	console.log("Checking audio.");
-	if ((audio = true)) {
+	if ((audio = true))
+	{
 		let result = await setPresentationAudioState(meet, (setState = "on"));
 		console.log(result);
 	}
@@ -114,8 +115,10 @@ async function presentToMeet(meet, spotlight = true, audio = true) {
 	console.log("Presenting Youtube Music tab.");
 } // headless mode not working, fix if possible
 
-async function forcePresentToMeet(meet) {
-	const isItShowtime = await meet.evaluate(async () => {
+async function forcePresentToMeet(meet)
+{
+	const isItShowtime = await meet.evaluate(async () =>
+	{
 		const presentButton = document
 			.querySelector(".cZG6je")
 			.querySelector('[aria-haspopup="menu"]');
@@ -128,7 +131,8 @@ async function forcePresentToMeet(meet) {
 				.querySelector(".cZG6je")
 				.querySelector('[aria-haspopup="menu"]')
 				.getAttribute("aria-label") !== "Present now"
-		) {
+		)
+		{
 			console.log(
 				document
 					.querySelector(".cZG6je")
@@ -155,7 +159,8 @@ async function forcePresentToMeet(meet) {
 	return "Mission F****** Accomplished!!!";
 }
 
-async function turnSpotlightOff(meet) {
+async function turnSpotlightOff(meet)
+{
 	const browser = await meet.context();
 	const meetLink = await meet.url();
 	const dummyMeet = await joinMeet(browser, meetLink);
@@ -163,6 +168,13 @@ async function turnSpotlightOff(meet) {
 	// present tab to meet
 	await forcePresentToMeet(dummyMeet);
 	await dummyMeet.close();
+
+	// open participants list
+	await meet.click('[aria-label="Show everyone"]');
+	await meet.waitForSelector('[aria-label="Participants"]');
+
+	// Pin the presentation on meet page (pins only on current meet page)
+	await (await meet.locator('[aria-label="Participants"]')).click('[aria-label="Pin your presentation from your main screen."]');
 
 	console.log(`Turned spotlight off.`);
 }
@@ -172,18 +184,19 @@ async function turnSpotlightOff(meet) {
  * @param {*} meet
  * @param {'on'|'off'|'toggle'} setState
  */
-async function setPresentationAudioState(meet, setState = "on") {
+async function setPresentationAudioState(meet, setState = "on")
+{
 	const VALID_STATES = ["on", "off", "toggle"];
 	// check setState is valid
 	if (!VALID_STATES.includes(setState)) return "Invalid setState!!!";
 
-	await meet.waitForSelector('[aria-label$="ute your presentation"]');
+	await meet.waitForSelector('[aria-label$="ute your presentation"]', { state: 'attached' });
 
 	const audioButton = await meet.locator('[aria-label$="ute your presentation"]');
 
 	const curState =
 		(await audioButton.getAttribute("aria-label")) ===
-		"Mute your presentation"
+			"Mute your presentation"
 			? "on"
 			: "off";
 
@@ -192,8 +205,10 @@ async function setPresentationAudioState(meet, setState = "on") {
 	if (curState === setState)
 		return `Presentation audio is already ${setState}.`;
 
-	else {
-		await audioButton.evaluate(() => {document.querySelector('[data-allocation-index="0"]').querySelector('[jsname="LgbsSe"]').click()});
+	else
+	{
+		// await audioButton.evaluate(() => { document.querySelector('[data-allocation-index="0"]').querySelector('[jsname="LgbsSe"]').click(); });
+		await audioButton.click({ force: true });
 		return `Turned presentation audio ${curState === "on" ? "off" : "on"}.`;
 	}
 }
@@ -206,26 +221,31 @@ async function setPresentationAudioState(meet, setState = "on") {
  * @param {Function} msgProcessor - funtion to process the msgs. recieves the string msg as argument.
  * @param {object} msgProcessorArgs - any other arguments to be passed to the msgProcessor.
  */
-async function getMsgsFromMeet(meet, msgProcessor, msgProcessorArgs) {
+async function getMsgsFromMeet(meet, msgProcessor, msgProcessorArgs)
+{
 
 	await meet.waitForSelector('.z38b6[jsname="xySENc"]');
 	const divHandle = await meet.$('.z38b6[jsname="xySENc"]');
 	let anotherDivHandle;
 
-	const sendForProcessing = async (message) => {
+	const sendForProcessing = async (message) =>
+	{
 		return await msgProcessor(message, msgProcessorArgs);
 	};
 
 	await meet.exposeFunction("sendForProcessing", sendForProcessing);
 
-	console.log('Listening for commands.')
+	console.log('Listening for commands.');
 
-	await divHandle.evaluate((div) => {
-		new MutationObserver(async (mutationsList, observer) => {
+	await divHandle.evaluate((div) =>
+	{
+		new MutationObserver(async (mutationsList, observer) =>
+		{
 			anotherDivHandle = mutationsList[0].addedNodes[0];
 
 			if (anotherDivHandle === undefined) return;
-			else if (anotherDivHandle.className === "GDhqjd") {
+			else if (anotherDivHandle.className === "GDhqjd")
+			{
 				anotherDivHandle = anotherDivHandle.childNodes[1];
 			}
 
@@ -241,7 +261,8 @@ async function getMsgsFromMeet(meet, msgProcessor, msgProcessorArgs) {
  * Send a message to the chat in the meet.
  * @param {string} msg
  */
-async function sendMsgToMeet(meet, msg) {
+async function sendMsgToMeet(meet, msg)
+{
 	msg = "(ツ)  " + msg;
 	await meet.fill("textarea", msg);
 	await meet.keyboard.press("Enter");

@@ -13,7 +13,8 @@ const { sendMsgToMeet } = require("./meet");
  * @param {string} message
  * @param {Array} pages
  */
-async function processCommand(message, pages) {
+async function processCommand(message, pages)
+{
 	const command = await decipherMsg(message);
 	if (command === null) return null;
 
@@ -21,7 +22,8 @@ async function processCommand(message, pages) {
 	const { cmdName, args } = command;
 	var reply;
 
-	switch (cmdName.toLowerCase()) {
+	switch (cmdName.toLowerCase())
+	{
 		case "p":
 		case "play":
 			reply = await playMusicCmd(ymusic, args);
@@ -62,7 +64,8 @@ async function processCommand(message, pages) {
  * @param {string} message
  * @returns {Promise<{ cmdName: string, args: string }>}
  */
-async function decipherMsg(message) {
+async function decipherMsg(message)
+{
 	const MATCH_COMMAND = /^\/(?<cmdName>\w+)\s*(?<args>(\w|\s)*\w)?\s*$/i;
 	const command = message.match(MATCH_COMMAND);
 
@@ -75,8 +78,10 @@ async function decipherMsg(message) {
 /**
  * Return the list of commands.
  */
-async function helpCmd() {
-	const COMMAND_LIST = `
+async function helpCmd()
+{
+	const COMMAND_LIST =
+	`
     /play \<songName>
     /p \<songName>
     /pause
@@ -93,7 +98,8 @@ async function helpCmd() {
  * @param {string} args
  * @returns {Promise<"Playing [songname] by [artist]"|"Enter a song!!!"|"No songs found.">}
  */
-async function playMusicCmd(ymusic, args) {
+async function playMusicCmd(ymusic, args)
+{
 	if (args === undefined) return "Enter a song!!!";
 
 	const query = args;
@@ -106,17 +112,20 @@ async function playMusicCmd(ymusic, args) {
 	return reply;
 }
 
-async function pauseMusicCmd(ymusic) {
+async function pauseMusicCmd(ymusic)
+{
 	const reply = await pauseMusic(ymusic);
 	return reply;
 }
 
-async function resumeMusicCmd(ymusic) {
+async function resumeMusicCmd(ymusic)
+{
 	const reply = await resumeMusic(ymusic);
 	return reply;
 }
 
-async function toggleMusicCmd(ymusic) {
+async function toggleMusicCmd(ymusic)
+{
 	const reply = await toggleMusic(ymusic);
 	return reply;
 }

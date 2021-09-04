@@ -1,4 +1,5 @@
-async function googleSignIn(browser, email, password) {
+async function googleSignIn(browser, email, password)
+{
 	// go to sign in page
 	const signInPage = await browser.newPage();
 	await signInPage.goto(

@@ -1,24 +1,20 @@
-const { startBrowser } = require("./browser");
-const { googleSignIn } = require("./login");
+const { startBrowser } = require("./browser.js");
+const { googleSignIn } = require("./login.js");
 const {
 	joinMeet,
 	setMeetChatBoxState,
 	presentToMeet,
 	getMsgsFromMeet,
-} = require("./meet");
-const { startYMusic } = require("./youtube");
-const { processCommand } = require("./commands");
+} = require("./meet.js");
+const { startYMusic } = require("./youtube.js");
+const { processCommand } = require("./commands.js");
 
-(async () => {
-	// start browser
+module.exports = async function init(meetLink)
+{
 	const browser = await startBrowser();
 
-	// confirm bot is signed in, if not then sign in
-	// await googleSignIn(browser, 'therealmeetbot', 'playthatfunkymusicwhiteboy')
-	
-	// open ytmusic, open meet, cast ytmusic to meet
-	const meetLink = "https://meet.google.com/vxh-feae-wtt"; // for now take input
 	const ymusic = await startYMusic(browser);
+	
 	const meet = await joinMeet(browser, meetLink);
 	await presentToMeet(meet, (spotlight = false));
 	await setMeetChatBoxState(meet);
@@ -29,5 +25,5 @@ const { processCommand } = require("./commands");
 	};
 
 	// monitor the meet chat for commands, send commands for command processing
-	await getMsgsFromMeet(meet, processCommand, pages); // improvement required
-})();
+	await getMsgsFromMeet(meet, processCommand, pages);
+};
