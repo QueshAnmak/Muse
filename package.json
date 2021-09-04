@@ -4,7 +4,7 @@
   "description": "A bot that uses Playwright to play music in google meets.",
   "main": "bot.js",
   "bin": {
-    "myapp": "./bot.js"
+    "meetBot": "./bot.js"
   },
   "repository": {
     "type": "git",
