@@ -10,6 +10,9 @@ async function joinMeet(browser, meetLink)
 	const meet = await browser.newPage({ deviceScaleFactor: 0.5 });
 	await meet.goto(meetLink);
 
+	// mute tab
+	await meet.keyboard.press('Control+M');
+
 	console.log("Opened google meet.");
 
 	// dismiss popup
@@ -22,21 +25,30 @@ async function joinMeet(browser, meetLink)
 	// await meet.click('[aria-label="Turn off microphone (CTRL + D)"]');
 	// await meet.click('[aria-label="Turn off camera (CTRL + E)"]');
 
-	console.log("Turned mic and camera off.");
+	// console.log("Turned mic and camera off.");
 
 	// wait for meet to load
-	try
+	const meetLoadIndicator = await meet.waitForSelector(
+		'.SQHmX',
+		{
+			state: 'attached',
+			timeout: 0
+		});
+
+	// if popup appears, it hides everything else
+	if (meetLoadIndicator.isHidden())
 	{
-		await meet.waitForSelector(".SQHmX");
+		try
+		{
+			await meet.click(
+				'#yDmH0d > div.llhEMd.iWO5td > div > div.g3VIld.vdySc.pMgRYb.Up8vH.J9Nfi.iWO5td > div.XfpsVe.J9fJmf > div',
+				{ timeout: 3000 }
+			);
+		}
+		catch (e) {}
 	}
-	catch (e)
-	{
-		await meet.click('#yDmH0d > div.llhEMd.iWO5td > div > div.g3VIld.vdySc.pMgRYb.Up8vH.J9Nfi.iWO5td > div.XfpsVe.J9fJmf > div');
-	}
-	finally
-	{
-		await meet.waitForSelector(".SQHmX");
-	}
+
+	await meet.waitForSelector(".SQHmX");
 
 	console.log("Joined meeting.");
 	return meet;

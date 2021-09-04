@@ -1,9 +1,7 @@
-#!/usr/bin/env node
-
 const yargs = require("yargs");
 const { argv } = require("yargs");
 
-const init = require('./utils/main.js');
+const init = require('./main.js');
 
 yargs.version("1.1.0");
 

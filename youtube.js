@@ -2,6 +2,10 @@ async function startYMusic(browser)
 {
 	// open ymusic
 	const ymusic = await browser.newPage();
+
+	// mute tab
+	await ymusic.keyboard.press('Control+M')
+
 	await ymusic.goto("https://music.youtube.com");
 
 	await blockAdsYTmusic(ymusic);
@@ -35,8 +39,8 @@ async function playMusic(ymusic, query, musicType = "song")
 	console.log(`Attempting to play ${query}.`);
 
 	// search query
-	const results = await searchQuery(ymusic, query);
-	if (results === "No results.") return "No results.";
+	let results = await searchQuery(ymusic, query);
+	if (results === "No results.") return null;
 
 	await decideMusic(ymusic, musicType);
 

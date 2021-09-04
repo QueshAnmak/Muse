@@ -105,7 +105,7 @@ async function playMusicCmd(ymusic, args)
 	const query = args;
 	const songData = await playMusic(ymusic, query);
 
-	if (songData === null) return "No songs found.";
+	if (songData === null) return "No results.";
 
 	const reply = `Playing ${songData.name} by ${songData.artist}`;
 
