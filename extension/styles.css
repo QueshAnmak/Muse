@@ -1,0 +1,19 @@
+/*Button One*/
+#start-bot {
+  padding:20px 60px;
+  outline: none;
+  background-color: #27ae60;
+  border: 2px solid black;
+  border-radius:5px;
+  box-shadow: 0 9px #95a5a6;
+}
+
+#start-bot:hover{
+  background-color: #2ecc71;
+}
+
+#start-bot:active {
+  background-color: #2ecc71;
+  box-shadow: 0 5px #95a5a6;
+  transform: translateY(4px);
+}
