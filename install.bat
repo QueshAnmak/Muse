@@ -1,0 +1,1 @@
+REG ADD "HKCU\Software\Google\Chrome\NativeMessagingHosts\com.queshanmak.meet-bot" /ve /t REG_SZ /d "C:\Users\samriddh jain\Projects\meet-bot\manifest.json" /f

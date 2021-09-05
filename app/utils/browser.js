@@ -10,6 +10,11 @@ async function startBrowser()
 				"--disable-component-extensions-with-background-pages",
 			],
 			args: ["--auto-select-desktop-capture-source=YouTube"],
+
+			logger: {
+				isEnabled: (name, severity) => name === 'browser',
+				log: (name, severity, message, args) => console.log(`${name} ${message}`)
+			}
 		});
 
 	const browserContext = browser.newContext(
