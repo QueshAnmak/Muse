@@ -1,33 +1,17 @@
 <link rel="stylesheet" href="styles.css">
+<script src="style.js"></script>
 
-<body class="">
+<body >
   <div class="settings">
     <div class="row">
       <div class="col-12">
-        <h1>Settings</h1>
-      </div>
-      <div class="row">
-        <div class="col-12">
-          <h2>Allow riders to see your location</h2>
-          <span class="custom-check">
-            <label for="riders-location">Always</label>
-            <label for="riders-location">Only when I enable</label>
-            <input type="checkbox" id="riders-location" />
-            <span class="faux-check"></span>
-          </span>
-        </div>
+        <h1>Meet The Bot</h1>
       </div>
 
-      <div class="row">
-        <div class="col-12">
-          <h2>See saved riders locations</h2>
-          <span class="custom-check">
-            <label for="saved-riders">Always</label>
-            <label for="saved-riders">Only when I enable</label>
-            <input type="checkbox" id="saved-riders" />
-            <span class="faux-check"></span>
-          </span>
-        </div>
+      <div>
+        <button class="bubbly-button">
+          Start
+        </button>
       </div>
 
       <div class="row">
@@ -57,15 +41,3 @@
     </div>
   </div>
 </body>
-<script>
-  $("#map-color").on("change", function (e)
-  {
-    if (e.target.checked)
-    {
-      $("body").addClass("nighttime");
-    } else
-    {
-      $("body").removeClass("nighttime");
-    }
-  })
-</script>
