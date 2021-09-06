@@ -34,11 +34,11 @@ body.nighttime::before {
 
 h1 {
   letter-spacing: 6px;
-  font-size: 2.75em;
+  font-size: 1.8em;
   text-transform: uppercase;
   margin: 0 0 20px 0;
-  padding: 20px 0;
-  font-weight: normal;
+  padding: 10px 0;
+  font-weight: 400;
   background-image: linear-gradient(to right, black 33%, rgba(255,255,255,0) 0%);
   background-position: bottom;
   background-size: 8px 2px;
