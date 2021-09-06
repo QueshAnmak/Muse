@@ -8,12 +8,10 @@ async function joinMeet(browser, meetLink)
 {
 	// open google meet
 	const meet = await browser.newPage({ deviceScaleFactor: 0.5 });
+	await meet.evaluate((meetLink) => { console.log(meetLink); }, meetLink);
 	await meet.goto(meetLink);
 
-	// mute tab
-	await meet.keyboard.press('Control+M');
-
-	console.log("Opened google meet.");
+	// console.log("Opened google meet.");
 
 	// dismiss popup
 	await meet.click('#yDmH0d > div.llhEMd.iWO5td > div > div.g3VIld.vdySc.Up8vH.J9Nfi.iWO5td > div.XfpsVe.J9fJmf > div');
@@ -25,7 +23,7 @@ async function joinMeet(browser, meetLink)
 	// await meet.click('[aria-label="Turn off microphone (CTRL + D)"]');
 	// await meet.click('[aria-label="Turn off camera (CTRL + E)"]');
 
-	// console.log("Turned mic and camera off.");
+	// // console.log("Turned mic and camera off.");
 
 	// wait for meet to load
 	const meetLoadIndicator = await meet.waitForSelector(
@@ -50,7 +48,16 @@ async function joinMeet(browser, meetLink)
 
 	await meet.waitForSelector(".SQHmX");
 
-	console.log("Joined meeting.");
+	// mute tab
+	// await meet.keyboard.down('Control');
+	// await meet.keyboard.press('KeyM');
+	// await meet.keyboard.up('Control');
+
+	await meet.keyboard.press('Control+KeyM');
+
+	// await meet.keyboard.press('Control+M');
+
+	// console.log("Joined meeting.");
 	return meet;
 }
 
@@ -92,7 +99,7 @@ async function setMeetChatBoxState(meet, setState = "opened")
 			} the chatbox.`;
 	}
 
-	console.log(result);
+	// console.log(result);
 	return result;
 }
 
@@ -109,7 +116,7 @@ async function presentToMeet(meet, spotlight = true, audio = true)
 	await forcePresentToMeet(meet);
 
 	// to put screen share out of spotlight
-	console.log("Checking spotlight.");
+	// console.log("Checking spotlight.");
 	if (spotlight === false)
 	{
 		await turnSpotlightOff(meet);
@@ -117,14 +124,14 @@ async function presentToMeet(meet, spotlight = true, audio = true)
 
 	// removing from spotlight turns audio off, to fix it audio must be turned
 	// back on manually
-	console.log("Checking audio.");
+	// console.log("Checking audio.");
 	if ((audio = true))
 	{
 		let result = await setPresentationAudioState(meet, (setState = "on"));
-		console.log(result);
+		// console.log(result);
 	}
 
-	console.log("Presenting Youtube Music tab.");
+	// console.log("Presenting Youtube Music tab.");
 } // headless mode not working, fix if possible
 
 async function forcePresentToMeet(meet)
@@ -145,12 +152,12 @@ async function forcePresentToMeet(meet)
 				.getAttribute("aria-label") !== "Present now"
 		)
 		{
-			console.log(
+			// console.log(
 				document
 					.querySelector(".cZG6je")
 					.querySelector('[aria-haspopup="menu"]')
 					.getAttribute("aria-label")
-			);
+			// );
 			return "Hell yeah!!!";
 		}
 	});
@@ -188,7 +195,7 @@ async function turnSpotlightOff(meet)
 	// Pin the presentation on meet page (pins only on current meet page)
 	await (await meet.locator('[aria-label="Participants"]')).click('[aria-label="Pin your presentation from your main screen."]');
 
-	console.log(`Turned spotlight off.`);
+	// console.log(`Turned spotlight off.`);
 }
 
 /**
@@ -212,7 +219,7 @@ async function setPresentationAudioState(meet, setState = "on")
 			? "on"
 			: "off";
 
-	console.log(await audioButton.getAttribute("aria-label"));
+	// console.log(await audioButton.getAttribute("aria-label"));
 
 	if (curState === setState)
 		return `Presentation audio is already ${setState}.`;
@@ -220,7 +227,7 @@ async function setPresentationAudioState(meet, setState = "on")
 	else
 	{
 		// await audioButton.evaluate(() => { document.querySelector('[data-allocation-index="0"]').querySelector('[jsname="LgbsSe"]').click(); });
-		await audioButton.click({ force: true });
+		await meet.evaluate(() => { document.querySelector('[aria-label$="ute your presentation"]').click(); });
 		return `Turned presentation audio ${curState === "on" ? "off" : "on"}.`;
 	}
 }
@@ -247,7 +254,7 @@ async function getMsgsFromMeet(meet, msgProcessor, msgProcessorArgs)
 
 	await meet.exposeFunction("sendForProcessing", sendForProcessing);
 
-	console.log('Listening for commands.');
+	// console.log('Listening for commands.');
 
 	await divHandle.evaluate((div) =>
 	{
@@ -264,7 +271,7 @@ async function getMsgsFromMeet(meet, msgProcessor, msgProcessorArgs)
 			let message = anotherDivHandle.innerText;
 
 			let result = await sendForProcessing(message);
-			console.log(result);
+			// console.log(result);
 		}).observe(div, { childList: true, subtree: true });
 	});
 } // add comments @DhairyaBahl

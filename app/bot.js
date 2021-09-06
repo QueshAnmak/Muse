@@ -20,6 +20,7 @@ yargs.command({
 
 	handler: function (argv)
 	{
+		// console.log(argv.link);
 		init(argv.link);
 	},
 });

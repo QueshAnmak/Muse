@@ -6,7 +6,7 @@ async function googleSignIn(browser, email, password)
 		"https://accounts.google.com/signin/v2/identifier?hl=ja&flowName=GlifWebSignIn&flowEntry=ServiceLogin"
 	);
 
-	console.log("Going to sign in page.");
+	// console.log("Going to sign in page.");
 
 	// fill details
 	await signInPage.fill('[aria-label="Email or phone"]', email);
@@ -14,7 +14,7 @@ async function googleSignIn(browser, email, password)
 	await signInPage.fill('[aria-label="Enter your password"]', password);
 	await signInPage.click('button:has-text("Next")');
 
-	console.log("Signed In.");
+	// console.log("Signed In.");
 
 	await signInPage.close();
 }

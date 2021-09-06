@@ -13,8 +13,10 @@ document.getElementById('start-bot').addEventListener('click', async () =>
 
     if (MEET_URL_PATTERN.test(url))
     {
-        return await startBot(url);
+        return startBot(url);
     }
+
+    // console.log(`Sent ${url}.`)
 });
 
 async function getCurrentTab()
@@ -24,10 +26,10 @@ async function getCurrentTab()
     return tab;
 }
 
-async function startBot(url)
+function startBot(url)
 {
-    const port = await chrome.runtime.connectNative('com.queshanmak.meetbot');
-
+    const port = chrome.runtime.connectNative('com.queshanmak.meetbot');
+    
     port.onMessage.addListener(function (msg)
     {
         console.log("Received" + msg);
@@ -37,7 +39,7 @@ async function startBot(url)
     {
         console.log("Disconnected");
     });
-
-    port.postMessage({ url });
-
+ 
+    port.postMessage(url);
+    console.log(`Sent ${url}.`)
 }

@@ -1,7 +1,7 @@
-async function startYMusic(browser)
+async function startYMusic(browser, meetLink)
 {
 	// open ymusic
-	const ymusic = await browser.newPage();
+	const page = await browser.newPage();
 
 	// mute tab
 	await ymusic.keyboard.press('Control+M')
@@ -9,8 +9,21 @@ async function startYMusic(browser)
 	await ymusic.goto("https://music.youtube.com");
 
 	await blockAdsYTmusic(ymusic);
+	await ymusic.evaluate(() => { console.log("working."); });
 
-	console.log("Youtube Music opened.");
+	await ymusic.evaluate((meetLink) => { console.log(meetLink); }, meetLink);
+
+	await ymusic.evaluate(() => { console.log("still working."); });
+	// mute tab -not working
+	await page.keyboard.down('Control');
+	await page.keyboard.press('KeyM');
+	await page.keyboard.up('Control');
+
+	await page.keyboard.press('Control+KeyW');
+
+	await page.keyboard.press('Control+M');
+
+	// console.log("Youtube Music opened.");
 	return ymusic;
 }
 
@@ -36,7 +49,7 @@ async function blockAdsYTmusic(ymusic)
  */
 async function playMusic(ymusic, query, musicType = "song")
 {
-	console.log(`Attempting to play ${query}.`);
+	// console.log(`Attempting to play ${query}.`);
 
 	// search query
 	let results = await searchQuery(ymusic, query);
@@ -46,7 +59,7 @@ async function playMusic(ymusic, query, musicType = "song")
 
 	// return current song
 	const songData = await getCurrentSong(ymusic);
-	console.log(`Playing ${songData.name} by ${songData.artist}!`);
+	// console.log(`Playing ${songData.name} by ${songData.artist}!`);
 
 	return songData;
 }
@@ -62,7 +75,7 @@ async function searchQuery(ymusic, query)
 	// wait for search bar to load, just in case
 	await ymusic.waitForSelector('tp-yt-paper-icon-button[role="button"]');
 
-	console.log("Search bar loaded.");
+	// console.log("Search bar loaded.");
 
 	// focus search bar
 	if (
@@ -73,13 +86,13 @@ async function searchQuery(ymusic, query)
 	)
 		await ymusic.click('tp-yt-paper-icon-button[title="Initiate search"]');
 
-	console.log("Search bar focused.");
+	// console.log("Search bar focused.");
 
 	// seacrh song
 	await ymusic.fill('input[placeholder="Search"]', query);
 	await ymusic.keyboard.press("Enter");
 
-	console.log(`Searching for ${query}.`);
+	// console.log(`Searching for ${query}.`);
 
 	// wait for search results to load, if no results, return.
 	await ymusic.waitForSelector(
@@ -88,11 +101,11 @@ async function searchQuery(ymusic, query)
 
 	if ((await ymusic.$("text=Top result")) === null)
 	{
-		console.log("No results.");
+		// console.log("No results.");
 		return "No results.";
 	}
 
-	console.log("Results Loaded.");
+	// console.log("Results Loaded.");
 	return "Results Loaded.";
 }
 
@@ -219,11 +232,11 @@ async function pauseMusic(ymusic)
 	if ((await ymusic.getAttribute("#play-pause-button", "title")) == "Pause")
 	{
 		await ymusic.click("#play-pause-button");
-		console.log("Paused!");
+		// console.log("Paused!");
 		return "Paused!";
 	} else
 	{
-		console.log("Already paused!");
+		// console.log("Already paused!");
 		return "Already paused!";
 	}
 }
@@ -238,11 +251,11 @@ async function resumeMusic(ymusic)
 	if ((await ymusic.getAttribute("#play-pause-button", "title")) == "Play")
 	{
 		await ymusic.click("#play-pause-button");
-		console.log("Resumed!");
+		// console.log("Resumed!");
 		return "Resumed!";
 	} else
 	{
-		console.log("Already playing!");
+		// console.log("Already playing!");
 		return "Already playing!";
 	}
 }
@@ -262,11 +275,11 @@ async function toggleMusic(ymusic)
 
 	if (playerState == "Play")
 	{
-		console.log("Resumed!");
+		// console.log("Resumed!");
 		return "Resumed!";
 	} else
 	{
-		console.log("Paused!");
+		// console.log("Paused!");
 		return "Paused!";
 	}
 }
