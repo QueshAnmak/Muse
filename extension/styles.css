@@ -1,19 +1,137 @@
-/*Button One*/
-#start-bot {
-  padding:20px 60px;
-  outline: none;
-  background-color: #27ae60;
-  border: 2px solid black;
-  border-radius:5px;
-  box-shadow: 0 9px #95a5a6;
+html, body {
+  min-height: 300;
+  height:300;
 }
 
-#start-bot:hover{
-  background-color: #2ecc71;
+body {
+  background: #d88b33 linear-gradient(-45deg, #d4592d, #d88b33);
+  color: #3b3b39;
+  font-family: 'Open Sans', sans-serif;
+  transition: all 0.2s ease;
 }
 
-#start-bot:active {
-  background-color: #2ecc71;
-  box-shadow: 0 5px #95a5a6;
-  transform: translateY(4px);
+body::before {
+  content: "";
+  width: 400px;
+  height: 400px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+  opacity: 0;
+  transition: all 0.5s ease;
+  z-index: -1;
+  background: #2c1e48 linear-gradient(-45deg, #1e0c38, #2c1e48);
+}
+
+body.nighttime {
+  color: #FFF;
+}
+
+body.nighttime::before {
+  opacity: 1;
+}
+
+h1 {
+  letter-spacing: 6px;
+  font-size: 2.75em;
+  text-transform: uppercase;
+  margin: 0 0 20px 0;
+  padding: 20px 0;
+  font-weight: normal;
+  background-image: linear-gradient(to right, black 33%, rgba(255,255,255,0) 0%);
+  background-position: bottom;
+  background-size: 8px 2px;
+  background-repeat: repeat-x;
+  text-align: center;
+}
+
+.nighttime h1 {
+  background-image: linear-gradient(to right, #FFF 33%, rgba(255,255,255,0) 0%);
+}
+
+h2 {
+  text-transform: uppercase;
+  font-size: 14px;
+}
+
+label {
+  text-transform: uppercase;
+  display: block;
+  padding: 5px 0;
+}
+
+.settings {
+  width: 200;
+  height: 300;
+/*   margin: 30px auto; */
+  background-color: #e3e0d7;
+  padding: 0 20px 40px 20px;
+  border-radius: 6px;
+  box-shadow: 0 20px 20px -5px rgba(0,0,0,0.4);
+  transition: background-color 0.8s ease;
+}
+
+.nighttime .settings {
+  background-color: rgba(0,0,0,0.4)
+}
+
+.custom-check {
+  display: block;
+  padding-left: 50px;
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.custom-check input[type="checkbox"], .faux-check {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 60px;
+  height: 56px;
+  opacity: 0;
+  display: block;
+  z-index: 1;
+}
+
+.faux-check {
+  opacity: 1;
+  z-index: 0;
+}
+
+.faux-check::before {
+  content: "";
+  width: 34px;
+  height: 100%;
+  display: block;
+  border: 3px solid #3b3b39;
+  box-sizing: border-box;
+  border-radius: 500px;
+  transition: border-color 0.6s ease;
+}
+
+.faux-check::after {
+  content: "";
+  position: absolute;
+  top: 13%;
+  left: 7px;
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  background-color: #3b3b39;
+  transition: top 0.4s ease, background-color 0.6s ease;
+}
+
+.custom-check input[type="checkbox"]:checked ~ .faux-check::after {
+  top: 50%;
+}
+
+
+
+.nighttime .faux-check::before {
+  border-color: #FFF;
+}
+
+.nighttime .faux-check::after {
+  background-color: #FFF;
 }

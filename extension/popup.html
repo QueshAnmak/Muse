@@ -1,12 +1,71 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <script src="./popup.js" defer></script>
-    <link rel="stylesheet" href="styles.css">
-  </head>
-  <body>
-    <button id="start-bot">
-        <span>Start Bot</span>
-    </button>
-  </body>
-</html>
+<link rel="stylesheet" href="styles.css">
+
+<body class="">
+  <div class="settings">
+    <div class="row">
+      <div class="col-12">
+        <h1>Settings</h1>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <h2>Allow riders to see your location</h2>
+          <span class="custom-check">
+            <label for="riders-location">Always</label>
+            <label for="riders-location">Only when I enable</label>
+            <input type="checkbox" id="riders-location" />
+            <span class="faux-check"></span>
+          </span>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <h2>See saved riders locations</h2>
+          <span class="custom-check">
+            <label for="saved-riders">Always</label>
+            <label for="saved-riders">Only when I enable</label>
+            <input type="checkbox" id="saved-riders" />
+            <span class="faux-check"></span>
+          </span>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <h2>Sound</h2>
+          <span class="custom-check">
+            <label for="sound">On</label>
+            <label for="sound">Off</label>
+            <input type="checkbox" id="sound" />
+            <span class="faux-check"></span>
+          </span>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-8">
+          <h2>Map Color Scheme</h2>
+          <span class="custom-check">
+            <label for="map-color">Daytime</label>
+            <label for="map-color">Nighttime</label>
+            <input type="checkbox" id="map-color" />
+            <span class="faux-check"></span>
+          </span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</body>
+<script>
+  $("#map-color").on("change", function (e)
+  {
+    if (e.target.checked)
+    {
+      $("body").addClass("nighttime");
+    } else
+    {
+      $("body").removeClass("nighttime");
+    }
+  })
+</script>
