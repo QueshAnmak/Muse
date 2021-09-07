@@ -262,7 +262,7 @@ textElements.forEach((element) =>
 });
 
 // kick off the render loop
-window.initBurst();
+// window.initBurst();
 render();
 
 document.querySelector('#button').addEventListener('click', clickButton);
