@@ -1,10 +1,11 @@
 html, body {
-  min-height: 350;
-  height:350;
+/*   min-height: 400; */
+  height:400;
 }
 
 body {
-  background: #d88b33 linear-gradient(-45deg, #d4592d, #d88b33);
+  /* height: 400; */
+  background: #d88b33 linear-gradient(-95deg, #d4592d, #d88b33);
   color: #3b3b39;
   font-family: 'Open Sans', sans-serif;
   transition: all 0.2s ease;
@@ -13,7 +14,7 @@ body {
 body::before {
   content: "";
   width: 400px;
-  height: 400px;
+  height: 450px;
   position: fixed;
   top: 0;
   left: 0;
@@ -63,8 +64,8 @@ label {
 
 .settings {
   width: 200;
-  height: 300;
-/*   margin: 30px auto; */
+  height: 350;
+/*   margin: auto; */
   background-color: #e3e0d7;
   padding: 0 20px 40px 20px;
   border-radius: 6px;
@@ -87,7 +88,7 @@ label {
   position: absolute;
   left: 0;
   top: 0;
-  width: 60px;
+  width: 5px;
   height: 56px;
   opacity: 0;
   display: block;
@@ -97,6 +98,7 @@ label {
 .faux-check {
   opacity: 1;
   z-index: 0;
+  transform: rotate(90deg);
 }
 
 .faux-check::before {
@@ -139,90 +141,196 @@ label {
 
 
 /* start button */
+@keyframes loading {
+  0% {
+    cy: 10;
+  }
+  25% {
+    cy: 3;
+  }
+  50% {
+    cy: 10;
+  }
+}
 body {
-  font-size: 16px;
-  font-family: 'Helvetica', 'Arial', sans-serif;
-  text-align: center;
-  background-color: #f8faff;
+  -webkit-font-smoothing: antialiased;
+  background-color: #f4f7ff;
 }
-.bubbly-button {
-  font-family: 'Helvetica', 'Arial', sans-serif;
-  display: inline-block;
-  font-size: 1em;
-  padding: 1em 2em;
-  margin-top: 100px;
-  margin-bottom: 60px;
-  -webkit-appearance: none;
-  appearance: none;
-  background-color: #ff0081;
-  color: #fff;
-  border-radius: 4px;
+canvas {
+  height: 100vh;
+  pointer-events: none;
+  position: fixed;
+  width: 100%;
+  z-index: 2;
+}
+button {
+  background: none;
   border: none;
+  color: #f4f7ff;
   cursor: pointer;
-  position: relative;
-  transition: transform ease-in 0.1s, box-shadow ease-in 0.25s;
-  box-shadow: 0 2px 25px rgba(255, 0, 130, 0.5);
+  font-family: 'Quicksand', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  height: 40px;
+  left: 50%;
+  outline: none;
+  overflow: hidden;
+  padding: 0 10px;
+  position: fixed;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 190px;
+  -webkit-tap-highlight-color: transparent;
+  z-index: 1;
 }
-.bubbly-button:focus {
-  outline: 0;
-}
-.bubbly-button:before, .bubbly-button:after {
-  position: absolute;
+button::before {
+  background: #1f2335;
+  border-radius: 50px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4) inset;
   content: '';
   display: block;
-  width: 140%;
   height: 100%;
-  left: -20%;
-  z-index: -1000;
-  transition: all ease-in-out 0.5s;
-  background-repeat: no-repeat;
+  margin: 0 auto;
+  position: relative;
+  transition: width 0.2s cubic-bezier(0.39, 1.86, 0.64, 1) 0.3s;
+  width: 100%;
 }
-.bubbly-button:before {
-  display: none;
-  top: -75%;
-  background-image: radial-gradient(circle, #ff0081 20%, transparent 20%), radial-gradient(circle, transparent 20%, #ff0081 20%, transparent 30%), radial-gradient(circle, #ff0081 20%, transparent 20%), radial-gradient(circle, #ff0081 20%, transparent 20%), radial-gradient(circle, transparent 10%, #ff0081 15%, transparent 20%), radial-gradient(circle, #ff0081 20%, transparent 20%), radial-gradient(circle, #ff0081 20%, transparent 20%), radial-gradient(circle, #ff0081 20%, transparent 20%), radial-gradient(circle, #ff0081 20%, transparent 20%);
-  background-size: 10% 10%, 20% 20%, 15% 15%, 20% 20%, 18% 18%, 10% 10%, 15% 15%, 10% 10%, 18% 18%;
+button.ready .submitMessage svg {
+  opacity: 1;
+  top: 1px;
+  transition: top 0.4s ease 600ms, opacity 0.3s linear 600ms;
 }
-.bubbly-button:after {
-  display: none;
-  bottom: -75%;
-  background-image: radial-gradient(circle, #ff0081 20%, transparent 20%), radial-gradient(circle, #ff0081 20%, transparent 20%), radial-gradient(circle, transparent 10%, #ff0081 15%, transparent 20%), radial-gradient(circle, #ff0081 20%, transparent 20%), radial-gradient(circle, #ff0081 20%, transparent 20%), radial-gradient(circle, #ff0081 20%, transparent 20%), radial-gradient(circle, #ff0081 20%, transparent 20%);
-  background-size: 15% 15%, 20% 20%, 18% 18%, 20% 20%, 15% 15%, 10% 10%, 20% 20%;
+button.ready .submitMessage .button-text span {
+  top: 0;
+  opacity: 1;
+  transition: all 0.2s ease calc(var(--dr) + 600ms);
 }
-.bubbly-button:active {
-  transform: scale(0.9);
-  background-color: #e60074;
-  box-shadow: 0 2px 25px rgba(255, 0, 130, 0.2);
+button.loading::before {
+  transition: width 0.3s ease;
+  width: 80%;
 }
-.bubbly-button.animate:before {
+button.loading .loadingMessage {
+  opacity: 1;
+}
+button.loading .loadingCircle {
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-name: loading;
+  cy: 10;
+}
+button.complete .submitMessage svg {
+  top: -30px;
+  transition: none;
+}
+button.complete .submitMessage .button-text span {
+  top: -8px;
+  transition: none;
+}
+button.complete .loadingMessage {
+  top: 80px;
+}
+button.complete .successMessage .button-text span {
+  left: 0;
+  opacity: 1;
+  transition: all 0.2s ease calc(var(--d) + 1000ms);
+}
+button.complete .successMessage svg {
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 0.3s ease-in-out 1.4s;
+}
+.button-text span {
+  opacity: 0;
+  position: relative;
+}
+.message {
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+}
+.message svg {
+  display: inline-block;
+  fill: none;
+  margin-right: 5px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+}
+.submitMessage .button-text span {
+  top: 8px;
+  transition: all 0.2s ease var(--d);
+}
+.submitMessage svg {
+  color: #5c86ff;
+  margin-left: -1px;
+  opacity: 0;
+  position: relative;
+  top: 30px;
+  transition: top 0.4s ease, opacity 0.3s linear;
+  width: 14px;
+}
+.loadingMessage {
+  opacity: 0;
+  transition: opacity 0.3s linear 0.3s, top 0.4s cubic-bezier(0.22, 0, 0.41, -0.57);
+}
+.loadingMessage svg {
+  fill: #5c86ff;
+  margin: 0;
+  width: 22px;
+}
+.successMessage .button-text span {
+  left: 5px;
+  transition: all 0.2s ease var(--dr);
+}
+.successMessage svg {
+  color: #5cffa1;
+  stroke-dasharray: 20;
+  stroke-dashoffset: 20;
+  transition: stroke-dashoffset 0.3s ease-in-out;
+  width: 14px;
+}
+.loadingCircle:nth-child(2) {
+  animation-delay: 0.1s;
+}
+.loadingCircle:nth-child(3) {
+  animation-delay: 0.2s;
+}
+/* Website Link */
+.website-link {
+  background: #f8faff;
+  border-radius: 50px 0 0 50px;
+  bottom: 30px;
+  color: #324b77;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  height: 34px;
+  filter: drop-shadow(2px 3px 4px rgba(0, 0, 0, 0.1));
+  padding: 0 20px 0 40px;
+  position: fixed;
+  right: 0;
+  text-align: left;
+  text-decoration: none;
+}
+.website-link__icon {
+  left: -10px;
+  position: absolute;
+  top: -12px;
+  width: 44px;
+}
+.website-link__name {
   display: block;
-  animation: topBubbles ease-in-out 0.75s forwards;
+  font-size: 14px;
+  line-height: 14px;
+  margin: 5px 0 3px;
 }
-.bubbly-button.animate:after {
+.website-link__last-name {
+  color: #55bada;
+}
+.website-link__message {
+  color: #8aa8c5;
   display: block;
-  animation: bottomBubbles ease-in-out 0.75s forwards;
-}
-@keyframes topBubbles {
-  0% {
-    background-position: 5% 90%, 10% 90%, 10% 90%, 15% 90%, 25% 90%, 25% 90%, 40% 90%, 55% 90%, 70% 90%;
-  }
-  50% {
-    background-position: 0% 80%, 0% 20%, 10% 40%, 20% 0%, 30% 30%, 22% 50%, 50% 50%, 65% 20%, 90% 30%;
-  }
-  100% {
-    background-position: 0% 70%, 0% 10%, 10% 30%, 20% -10%, 30% 20%, 22% 40%, 50% 40%, 65% 10%, 90% 20%;
-    background-size: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
-  }
-}
-@keyframes bottomBubbles {
-  0% {
-    background-position: 10% -10%, 30% 10%, 55% -10%, 70% -10%, 85% -10%, 70% -10%, 70% 0%;
-  }
-  50% {
-    background-position: 0% 80%, 20% 80%, 45% 60%, 60% 100%, 75% 70%, 95% 60%, 105% 0%;
-  }
-  100% {
-    background-position: 0% 90%, 20% 90%, 45% 70%, 60% 110%, 75% 80%, 95% 70%, 110% 10%;
-    background-size: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
-  }
+  font-size: 7px;
+  line-height: 7px;
 }
