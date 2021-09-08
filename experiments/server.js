@@ -1,4 +1,4 @@
-const init = require("./utils/main.js");
+const init = require("../app/utils/main.js");
 
 (() =>
 {

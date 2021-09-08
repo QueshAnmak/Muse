@@ -1,7 +1,7 @@
 {
     "name": "com.queshanmak.meetbot",
     "description": "Meet Bot - Music bot for Google Meets.",
-    "path": "C:\\Users\\samriddh jain\\Projects\\meet-bot\\run.bat",
+    "path": "C:\\Users\\samriddh jain\\Projects\\meet-bot\\runner.cpython-39.pyc",
     "type": "stdio",
     "allowed_origins": [
         "chrome-extension://beckocoaidpgfbnoklijgcciglojedfj/"

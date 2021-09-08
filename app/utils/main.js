@@ -14,9 +14,9 @@ const {
 
 module.exports = async function init(meetLink, spotlight=false)
 {
-	const browser = await startBrowser();
+	const browser = await startBrowser(spotlight);
 
-	const ymusic = await startYMusic(browser, meetLink);
+	const ymusic = await startYMusic(browser);
 	const meet = await joinMeet(browser, meetLink);
 	await presentToMeet(meet, (spotlight));
 	await minimizeBrowser(browser, meet)

@@ -1,8 +1,9 @@
 const { chromium } = require("playwright-core");
 
 async function startBrowser(
-	minimized=true,
-	channelc='msedge',
+	// minimized = true,
+	spotlight,
+	channelc='chrome',
 	screenShareSource='YouTube',
 )
 {
@@ -11,24 +12,15 @@ async function startBrowser(
 		{
 			headless: false,
 			channel: channelc,
+			// devtools: !spotlight,
 			ignoreDefaultArgs: [
 				"--disable-component-extensions-with-background-pages",
-				'--disable-extensions',
-				// '--disable-default-apps',
 			],
 			args: [
-				// `--load-extension=${pathToExtension}`,
 				`--auto-select-desktop-capture-source=${screenShareSource}`,
-				'--enable-tab-audio-muting',
-				'--use-fake-ui-for-media-stream',
-				// '--mute-audio',
-
+				"--use-fake-device-for-media-stream",
+				"--use-fake-ui-for-media-stream",
 			],
-
-			// logger: {
-			// 	isEnabled: (name, severity) => name === 'browser',
-			// 	log: (name, severity, message, args) => console.log(`${name} ${message}`)
-			// }
 		});
 
 	const browserContext = await browser.newContext(

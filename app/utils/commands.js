@@ -4,7 +4,10 @@ const {
 	resumeMusic,
 	toggleMusic,
 } = require("./youtube");
-const { sendMsgToMeet } = require("./meet");
+const { sendMsgToMeet, leaveMeet } = require("./meet");
+const {
+	closeBrowser
+} = require("./browser.js")
 
 /**
  * Check if  the message is a command.
@@ -50,11 +53,18 @@ async function processCommand(message, pages)
 			reply = "Coming Soon...";
 			break;
 
+		case "exit":
+		case "leave":
+		case "bye":
+			await exitCmd(meet);
+			break;
+
 		default:
 			reply = "Invalid Command!!!";
 	}
 
-	await sendMsgToMeet(meet, reply);
+	if (reply)
+		await sendMsgToMeet(meet, reply);
 }
 
 /**
@@ -81,7 +91,7 @@ async function decipherMsg(message)
 async function helpCmd()
 {
 	const COMMAND_LIST =
-	`
+		`
     /play \<songName>
     /p \<songName>
     /pause
@@ -128,6 +138,17 @@ async function toggleMusicCmd(ymusic)
 {
 	const reply = await toggleMusic(ymusic);
 	return reply;
+}
+
+async function exitCmd(meet)
+{
+	const EXIT_REPLIES = ["Bella ciao.", "Hasta la vista, baby.", "Adios Amigos.", "So long, and thanks for all the fish!", "Live Long and Prosper.", "Godspeed."];
+	const reply = EXIT_REPLIES[Math.floor(Math.random() * EXIT_REPLIES.length)];
+	const browser = meet.context()
+
+	await sendMsgToMeet(meet, reply);
+	await leaveMeet(meet);
+	await closeBrowser(browser)
 }
 
 module.exports = {

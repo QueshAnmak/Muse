@@ -6,13 +6,11 @@
   <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
   <title>Document</title>
 
-  <link rel="stylesheet" href="popup.css">
-  <link rel="stylesheet" href="dark-mode.js">
-  <link rel="stylesheet" href="start-button.css">
-  <link rel="stylesheet" href="options.css">
+  <link rel="stylesheet" href="css/popup.css">
+  <link rel="stylesheet" href="css/dark-mode.css">
 
-  <script src="dark-mode.js" defer></script>
-  <script src="start-button.js" defer></script>
+  <script src="js/dark-mode.js" defer></script>
+  <script src="js/start-button.js" defer></script>
 
   <script src="native-messaging.js"></script>
 </head>
@@ -24,6 +22,7 @@
       <div class="col-12">
         <h1>Meet The Bot</h1>
       </div>
+        <canvas id="canvas"></canvas>
 
       <div class="row">
         <button id="button" class="ready start-button">
@@ -51,22 +50,9 @@
           </div>
         </button>
 
-        <canvas id="canvas"></canvas>
       </div>
       
       <div class="options">
-        <div class="row">
-          <div class="col-12">
-            <h2>Sound</h2>
-            <span class="custom-check">
-              <label for="sound">On</label>
-              <label for="sound">Off</label>
-              <input type="checkbox" id="sound" />
-              <span class="faux-check"></span>
-            </span>
-          </div>
-        </div>
-
         <div class="row">
           <div class="col-8">
             <h2>Map Color Scheme</h2>

@@ -13,15 +13,15 @@ async function joinMeet(browser, meetLink)
 
 	// console.log("Opened google meet.");
 
-	// dismiss popup
-	await meet.click('#yDmH0d > div.llhEMd.iWO5td > div > div.g3VIld.vdySc.Up8vH.J9Nfi.iWO5td > div.XfpsVe.J9fJmf > div');
+	// dismiss popup - DEPRECATED
+	// await meet.click('#yDmH0d > div.llhEMd.iWO5td > div > div.g3VIld.vdySc.Up8vH.J9Nfi.iWO5td > div.XfpsVe.J9fJmf > div');
 
 	// join meeting, will wait indefinitely
 	await meet.click('div[jsname="Qx7uuf"]', { timeout: 0 });
 
 	// turn off mic and video
-	// await meet.click('[aria-label="Turn off microphone (CTRL + D)"]');
-	// await meet.click('[aria-label="Turn off camera (CTRL + E)"]');
+	await meet.keyboard.press('Control+D');
+	await meet.keyboard.press('Control+E');
 
 	// // console.log("Turned mic and camera off.");
 
@@ -47,15 +47,6 @@ async function joinMeet(browser, meetLink)
 	}
 
 	await meet.waitForSelector(".SQHmX");
-
-	// mute tab
-	// await meet.keyboard.down('Control');
-	// await meet.keyboard.press('KeyM');
-	// await meet.keyboard.up('Control');
-
-	await meet.keyboard.press('Control+KeyM');
-
-	// await meet.keyboard.press('Control+M');
 
 	// console.log("Joined meeting.");
 	return meet;
@@ -287,9 +278,9 @@ async function sendMsgToMeet(meet, msg)
 	await meet.keyboard.press("Enter");
 }
 
-// async function (meet) {
-
-// }
+async function leaveMeet(meet) {
+	await meet.click('[aria-label="Leave call"]');
+}
 
 module.exports = {
 	joinMeet,
@@ -297,4 +288,5 @@ module.exports = {
 	presentToMeet,
 	getMsgsFromMeet,
 	sendMsgToMeet,
+	leaveMeet,
 };

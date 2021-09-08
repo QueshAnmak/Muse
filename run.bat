@@ -1,3 +1,3 @@
 @echo off
 
-python -u runner.py
+python runner.py

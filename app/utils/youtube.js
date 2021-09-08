@@ -1,28 +1,11 @@
 async function startYMusic(browser, meetLink)
 {
 	// open ymusic
-	const page = await browser.newPage();
-
-	// mute tab
-	await ymusic.keyboard.press('Control+M')
-
+	const ymusic = await browser.newPage();
 	await ymusic.goto("https://music.youtube.com");
 
 	await blockAdsYTmusic(ymusic);
-	await ymusic.evaluate(() => { console.log("working."); });
-
-	await ymusic.evaluate((meetLink) => { console.log(meetLink); }, meetLink);
-
-	await ymusic.evaluate(() => { console.log("still working."); });
-	// mute tab -not working
-	await page.keyboard.down('Control');
-	await page.keyboard.press('KeyM');
-	await page.keyboard.up('Control');
-
-	await page.keyboard.press('Control+KeyW');
-
-	await page.keyboard.press('Control+M');
-
+	
 	// console.log("Youtube Music opened.");
 	return ymusic;
 }

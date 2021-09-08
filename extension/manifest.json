@@ -1,6 +1,6 @@
 {
-    "name": "Meet Bot",
-    "description": "The Chromium extension to start Meet Bot.",
+    "name": "Muse",
+    "description": "The Chromium extension to start Muse.",
     "version": "1.0",
     "manifest_version": 3,
     "permissions": [
@@ -9,9 +9,9 @@
         "scripting"
     ],
     "background": {
-        "service_worker": "background.js"
+        "service_worker": "./core/background.js"
     },
     "action": {
-        "default_popup": "popup.html"
+        "default_title": "Activate Muse"
     }
 }
