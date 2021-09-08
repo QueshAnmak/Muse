@@ -1,10 +1,15 @@
 /**
  * Join a google meet in the browser.
+ * 
+ * **Fake default audio output device is not working, must switch to Fake audio output 1 or 2 until fixed.**
+ 
+ * **References: 
+ *	https://peter.sh/experiments/chromium-command-line-switches/#use-fake-device-for-media-stream**
  * @param {} browser - playwright.BrowserContext
  * @param {string} meetLink
  * @returns
  */
-async function joinMeet(browser, meetLink)
+async function joinMeet(browser, meetLink, presentOnly = false)
 {
 	// open google meet
 	const meet = await browser.newPage({ deviceScaleFactor: 0.5 });
@@ -15,15 +20,30 @@ async function joinMeet(browser, meetLink)
 
 	// dismiss popup - DEPRECATED
 	// await meet.click('#yDmH0d > div.llhEMd.iWO5td > div > div.g3VIld.vdySc.Up8vH.J9Nfi.iWO5td > div.XfpsVe.J9fJmf > div');
+	
+	// sometimes meet gets stuck on getting ready, opening devtools fixes it
+	await meet.keyboard.press('Control+Shift+J');
 
 	// join meeting, will wait indefinitely
-	await meet.click('div[jsname="Qx7uuf"]', { timeout: 0 });
+	if (presentOnly)
+	{
+		await meet.click('div[jsname = "hNGZQc"]', { timeout: 0 });
+	}
 
-	// turn off mic and video
-	await meet.keyboard.press('Control+D');
-	await meet.keyboard.press('Control+E');
+	else
+	{
+		// join meeting, will wait indefinitely
+		await meet.click('div[jsname="Qx7uuf"]', { timeout: 0 });
 
-	// // console.log("Turned mic and camera off.");
+		// turn off mic and video
+		await meet.keyboard.press('Control+D');
+		await meet.keyboard.press('Control+E');
+
+		// // console.log("Turned mic and camera off.");
+	}
+	
+	// close devtools
+	await meet.keyboard.press('Control+Shift+J');
 
 	// wait for meet to load
 	const meetLoadIndicator = await meet.waitForSelector(
@@ -36,6 +56,11 @@ async function joinMeet(browser, meetLink)
 	// if popup appears, it hides everything else
 	if (meetLoadIndicator.isHidden())
 	{
+		// in this case, the popup is for for share now, someone else is presenting
+		if (presentOnly)
+			await meet.click('div[data-id = "EBS5u"]');
+
+		// in this case there is something else wrong - EXPIRED
 		try
 		{
 			await meet.click(
@@ -43,14 +68,41 @@ async function joinMeet(browser, meetLink)
 				{ timeout: 3000 }
 			);
 		}
-		catch (e) {}
+		catch (e) { }
 	}
 
 	await meet.waitForSelector(".SQHmX");
 
+	// make sure screen is presented
+	if (presentOnly)
+	{
+		await meet.waitForSelector("text=You're presenting to everyone");
+	}
+
 	// console.log("Joined meeting.");
 	return meet;
+
 }
+
+/**
+ * Companion function for joinMeet.
+ * @param {} meet 
+ */
+// async function switchToFakeAudioOutput1(meet)
+// {
+// 	await meet.click('[aria-label="More options"]');
+// 	await meet.click('[jsname="dq27Te"]');
+// 	await meet.waitForSelector('text=Speakers');
+// 	console.log('0')
+
+// 	// await meet.click('#yDmH0d > div.llhEMd.iWO5td > div > div.g3VIld.zN0eDd.Kdui9b.vDc8Ic.hFEqNb.J9Nfi.iWO5td > span > div > div.F1dYic.HQRfgd > div.n1etMc.gMPiLc > div.ejeiye > div > div:nth-child(1) > div > div:nth-child(2) > div.nBky5e > div > div.arczj > div > div:nth-child(1) > div.ry3kXd > div.MocG8c.LMgvRb.KKjvXb')
+// 	// console.log('1')
+// 	await meet.click('[data-aria-label="Select speakers"]');
+// 	console.log('2')
+
+// 	await meet.click('text=Fake Audio Output 1');
+// 	await meet.click('[aria-label="Close"]');
+// } - EXPIRED: Currently not required
 
 /**
  * Changes the state of the meet chatbox to the setState.
@@ -143,12 +195,12 @@ async function forcePresentToMeet(meet)
 				.getAttribute("aria-label") !== "Present now"
 		)
 		{
-			// console.log(
-				document
-					.querySelector(".cZG6je")
-					.querySelector('[aria-haspopup="menu"]')
-					.getAttribute("aria-label")
-			// );
+			// // console.log(
+			// document
+			// 	.querySelector(".cZG6je")
+			// 	.querySelector('[aria-haspopup="menu"]')
+			// 	.getAttribute("aria-label");
+			// // );
 			return "Hell yeah!!!";
 		}
 	});
@@ -173,10 +225,9 @@ async function turnSpotlightOff(meet)
 {
 	const browser = await meet.context();
 	const meetLink = await meet.url();
-	const dummyMeet = await joinMeet(browser, meetLink);
+	const dummyMeet = await joinMeet(browser, meetLink, presentOnly=true);
 
-	// present tab to meet
-	await forcePresentToMeet(dummyMeet);
+	// spotlight is off
 	await dummyMeet.close();
 
 	// open participants list
@@ -278,7 +329,8 @@ async function sendMsgToMeet(meet, msg)
 	await meet.keyboard.press("Enter");
 }
 
-async function leaveMeet(meet) {
+async function leaveMeet(meet)
+{
 	await meet.click('[aria-label="Leave call"]');
 }
 
