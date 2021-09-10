@@ -1,3 +1,3 @@
 @echo off
 
-python runner.py
+python run.cpython-39.pyc

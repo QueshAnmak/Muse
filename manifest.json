@@ -9,7 +9,7 @@
         "scripting"
     ],
     "background": {
-        "service_worker": "./core/background.js"
+        "service_worker": "extension/core/background.js"
     },
     "action": {
         "default_title": "Activate Muse"

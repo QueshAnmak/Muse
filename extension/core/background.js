@@ -10,14 +10,16 @@ chrome.action.onClicked.addListener(async () =>
     if (port === undefined)
     {
         let newPort = await init(url);
-        console.log(newPort);
         activeBots[url] = newPort;
+        console.log('Muse on.')
+
     }
     else
     {
-        console.log(port);
+        port.postMessage('Shut down.');
         port.disconnect();
         delete activeBots[url];
+        console.log('Muse off.')
     }
 });
 
@@ -28,12 +30,12 @@ async function init(url)
 
     if (MEET_URL_PATTERN.test(url))
     {
-        console.log("Starting Muse.")
+        console.log("Starting Muse.");
         return startBot(url);
     }
     else
     {
-        console.log(`${url} is not a meet!!!`)
+        console.log(`${url} is not a meet!!!`);
     }
 }
 
@@ -46,20 +48,22 @@ async function getCurrentTab()
 
 async function startBot(url)
 {
-    let port = await chrome.runtime.connectNative('com.queshanmak.meetbot');
+    let port = await chrome.runtime.connectNative('com.queshanmak.muse');
     // console.log(port)
     port.onMessage.addListener(function (msg)
     {
-        console.log("Received" + msg);
+        console.log(`Received -> ${msg}`);
     });
 
     port.onDisconnect.addListener(function ()
     {
-        console.log("Disconnected");
+        port.postMessage('Shut down.');
+        port.disconnect();
+        delete activeBots[url];
+        console.log('Muse off.')
     });
 
     port.postMessage(url);
-    console.log(`Sent ${url}.`);
 
     return port;
 }

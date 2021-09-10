@@ -5,8 +5,6 @@
 # than text, mode.
 
 import json
-import re
-import os
 import sys
 import struct
 
@@ -32,16 +30,3 @@ def send_message(encoded_message):
     sys.stdout.buffer.write(encoded_message['length'])
     sys.stdout.buffer.write(encoded_message['content'])
     sys.stdout.buffer.flush()
-
-
-meet__url_pattern = re.compile(
-    '^https://meet.google.com/[a-z]{3}-[a-z]{4}-[a-z]{3}$')
-
-while True:
-    
-    link = get_message()
-    if meet__url_pattern.match(link):
-
-        send_message(encode_message("pong a bong bong !!!"))
-        os.system(f'node ./app/bot.js start --link="{link}"')
-    
