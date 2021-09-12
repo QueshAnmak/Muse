@@ -4,6 +4,6 @@
     "path": "muse.exe",
     "type": "stdio",
     "allowed_origins": [
-        "chrome-extension://beckocoaidpgfbnoklijgcciglojedfj/"
+        "chrome-extension://onhljmgokbcegppcgjpmgbfapkkeopnd/"
     ]
 }

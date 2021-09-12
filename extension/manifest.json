@@ -1,4 +1,5 @@
 {
+    "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvaCyjb3mRonZjUFiX7dnqoScBWh/hg1dJyyT3uBZNuLBy2gK8Sfzuf89iPiGD0nG7TxRH52Mud65Hi3tiUrAdexQA0ufYFlyeGHyr4ecLkYoorKaFoSiBbZWiO/n5H48KimYNlCNtUPfVEHU/0/Cc5yttfEoTGMm9U3RGEeFdN9+fwmxqtUIlolV9BRtYjdQa6ERyInytMFa6/v465k/pnUnYZMMUS9RDr+gdzXo4pxgWtoWNFFBpTGD0IpRZz4Q+tVjykM6Ola6IcgJr+xMCdqkp1PXPF6Vk7GANW5YgMGVVQKhXx/nHhMtzHtn3vZGFXHPTEc6S3Q2Z5ghIxR9HwIDAQAB",
     "name": "Muse",
     "description": "The Chromium extension to start Muse.",
     "version": "1.0",
