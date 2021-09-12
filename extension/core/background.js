@@ -10,15 +10,19 @@ chrome.action.onClicked.addListener(async () =>
     if (port === undefined)
     {
         let newPort = await init(url);
-        activeBots[url] = newPort;
-        console.log('Muse on.')
+        
+        if (newPort)
+        {
+            activeBots[url] = newPort;
+            console.log('Muse on.');
+        }
 
     }
     else
     {
-        port.postMessage('Shut down.');
-        port.disconnect();
+        await port.postMessage('Shut down.');
         delete activeBots[url];
+        await port.disconnect();
         console.log('Muse off.')
     }
 });
@@ -55,12 +59,10 @@ async function startBot(url)
         console.log(`Received -> ${msg}`);
     });
 
-    port.onDisconnect.addListener(function ()
+    port.onDisconnect.addListener(async () =>
     {
-        port.postMessage('Shut down.');
-        port.disconnect();
         delete activeBots[url];
-        console.log('Muse off.')
+        console.log('Host disconnected. Muse off.')
     });
 
     port.postMessage(url);

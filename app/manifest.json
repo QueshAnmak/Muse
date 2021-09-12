@@ -1,9 +1,0 @@
-{
-    "name": "com.queshanmak.muse",
-    "description": "Muse - Music bot for Google Meets.",
-    "path": "C:\\Users\\samriddh jain\\Projects\\meet-bot\\run.cpython-39.pyc",
-    "type": "stdio",
-    "allowed_origins": [
-        "chrome-extension://dapckckfpddolhdpcbnealpfoppnjhkn/"
-    ]
-}

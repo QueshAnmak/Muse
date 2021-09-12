@@ -1,0 +1,47 @@
+{
+  "name": "meet-bot",
+  "version": "1.0.0",
+  "description": "A bot that uses Playwright to play music in google meets.",
+  "main": "muse.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "meetbot": "./muse.js"
+  },
+  "pkg": {
+    "scripts": [
+      "utils/*.js",
+      "node_modules/@cliqz/*.js",
+      "node_modules/playwright-core/*.js",
+      "node_modules/yargs/*.js",
+      "node_modules/cross-fetch/*.js"
+    ],
+    "assets": [
+      "login_data/auth.json",
+      "node_modules/@cliqz/*",
+      "node_modules/playwright-core/*",
+      "node_modules/yargs/*",
+      "node_modules/cross-fetch/*"
+    ],
+    "targets": [],
+    "outputPath": "dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/QueshAnmak/meet-bot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/QueshAnmak/meet-bot/issues"
+  },
+  "homepage": "https://github.com/QueshAnmak/meet-bot#readme",
+  "dependencies": {
+    "@cliqz/adblocker-playwright": "^1.22.5",
+    "chrome-native-messaging": "^0.2.0",
+    "cross-fetch": "^3.1.4",
+    "playwright-core": "^1.14.1",
+    "yargs": "^17.1.1"
+  }
+}
