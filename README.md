@@ -1,20 +1,49 @@
-# Meet Bot - For google meet.
+# Muse - Music Bot for Google Meet.
 
 A bot that uses Playwright to play music in Google Meet via YouTube Music.
 
 # Requirements
 
-- 
+- python 3
+- node 14+
+- npm
 
-# Setup
+# Installation
 
-- Clone the repository.
+- Download the latest release.
+- Unzip files to the desired folder.
+
+## Register app as native messaging host
+- Inside the `app` folder, run `regkeymaker.py`.
+
+## (Optional, but Recommended) Installing extension
+
+- [COMING SOON...MAYBE] For MS Edge users: Install extension from edge add-on store (if they decide to accept it).
+
+Currently the only way to use the extension is via turning the extension developer mode on and loading the extension unpacked.
+
+# How To Use
+
+## Using the extension
+
+- Go to the Meet tab. (just making sure it is the active tab)
+- Click on the Muse extension. Muse will take a minute to setup.
+- Done (ツ) *Badum Tsss!*
+
+## Using CLI
+
+- Go to app folder.
+- Run the following command, replacing <meetLink> with the Google Meet URL.
+  
+  `node bot.js start --link=<meetLink>`
 
 # Commands
 
+Use the commands in the Meet chat.
+
 -   `/play` `<songName>`
 
-    -   description - Plays a song.
+    -   Plays a song. (replace `<songName>` with the name of the song)
 
 -   `/p` `<songName>`
 
@@ -32,12 +61,12 @@ A bot that uses Playwright to play music in Google Meet via YouTube Music.
 
     -   Toggles the current state. Play, pause, play, pause, play...
 
+-	`/exit`, `/leave`, `/bye`
+
+	-	Kick Muse outta the meeting!
+
 -   `/help`
-    -   Bot 101, retrieves list of commands
+    -   Muse 101, retrieves list of commands
 
 ---
 
-# Structure
-
--   Frontside - Observe the meet chat for bot commands. On getting command, execute it.
--   Backside - Recieves commands from frontside, searches music on youtube music using Playwright. The tab playing the music is cast to the meet, thus allowing it to play audio inside the meet.
