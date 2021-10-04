@@ -14,7 +14,7 @@ const {
 
 module.exports = async function init(meetLink)
 {
-	const browser = await startBrowser();
+	const browser = await startBrowser(channelc='msedge');
 	const page1 = await browser.newPage();
 	const page2 = await browser.newPage();
 
