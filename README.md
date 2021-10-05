@@ -27,7 +27,8 @@ Currently the only way to use the extension is via turning the extension develop
 ## Using the extension
 
 - Go to the Meet tab. (just making sure it is the active tab)
-- Click on the Muse extension. Muse will take a minute to setup.
+- Click on the Muse extension.
+  - Muse will take a minute to setup. DO NOT MINIMIZE OR ITERACT WITH THE NEW BROWSER!!! The browser will automatically minimize when Muse is set up.
 - Done (ツ) *Badum Tsss!*
 
 ## Using CLI

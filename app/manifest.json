@@ -1,7 +1,7 @@
 {
     "name": "com.queshanmak.muse",
     "description": "Muse - Music bot for Google Meets.",
-    "path": "muse.exe",
+    "path": "startMuse.bat",
     "type": "stdio",
     "allowed_origins": [
         "chrome-extension://onhljmgokbcegppcgjpmgbfapkkeopnd/"
