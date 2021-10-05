@@ -12,6 +12,9 @@ A bot that uses Playwright to play music in Google Meet via YouTube Music.
 
 - Download the latest release.
 - Unzip files to the desired folder.
+- Inside the `app` folder run following command:
+
+	`npm install`
 
 ## Register app as native messaging host
 - Inside the `app` folder, run `regkeymaker.py`.
@@ -40,7 +43,7 @@ To load unpacked extension:
 ## Using CLI
 
 - Go to app folder.
-- Run the following command, replacing <meetLink> with the Google Meet URL.
+- Run the following command, replacing `<meetLink>` with the Google Meet URL.
   
   `node bot.js start --link=<meetLink>`
 
