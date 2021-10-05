@@ -12,7 +12,7 @@ A bot that uses Playwright to play music in Google Meet via YouTube Music.
 
 - Download the latest release.
 - Unzip files to the desired folder.
-- Inside the `app` folder run following command:
+- In a shell, navigate to `app` folder and run following command:
 
 	`npm install`
 
