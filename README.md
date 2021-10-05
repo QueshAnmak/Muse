@@ -38,7 +38,8 @@ To load unpacked extension:
 
 - Go to the Meet tab. (just making sure it is the active tab)
 - Click on the Muse extension.
-  - Muse will take a minute to setup. DO NOT MINIMIZE OR ITERACT WITH THE NEW BROWSER!!! The browser will automatically minimize when Muse is set up.
+  - Muse will take a minute to setup. DO NOT INTERACT WITH THE NEW BROWSER EXCEPT FOR MINIMIZING IT!!! The browser will automatically minimize when Muse is set up.
+- The bot must be admitted by the meeting host.
 - Done (ツ) *Badum Tsss!*
 
 ## Using CLI
