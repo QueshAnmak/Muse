@@ -1,3 +1,5 @@
+<img src="https://user-images.githubusercontent.com/78043832/136219221-81f3f4a6-762e-4211-bcd6-c915741b8900.png" align="right">
+
 # Muse - Music Bot for Google Meet.
 
 A bot that uses Playwright to play music in Google Meet via YouTube Music.
