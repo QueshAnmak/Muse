@@ -4,6 +4,10 @@
 
 A bot that uses Playwright to play music in Google Meet via YouTube Music.
 
+
+https://user-images.githubusercontent.com/78043832/136446776-6c062e27-c1f3-4151-aea9-232a1c8e2c8f.mp4
+
+
 # Requirements
 
 - python 3
