@@ -1,6 +1,12 @@
+<img src="https://user-images.githubusercontent.com/78043832/136219221-81f3f4a6-762e-4211-bcd6-c915741b8900.png" align="right">
+
 # Muse - Music Bot for Google Meet.
 
 A bot that uses Playwright to play music in Google Meet via YouTube Music.
+
+
+https://user-images.githubusercontent.com/78043832/136446776-6c062e27-c1f3-4151-aea9-232a1c8e2c8f.mp4
+
 
 # Requirements
 
@@ -38,7 +44,8 @@ To load unpacked extension:
 
 - Go to the Meet tab. (just making sure it is the active tab)
 - Click on the Muse extension.
-  - Muse will take a minute to setup. DO NOT MINIMIZE OR ITERACT WITH THE NEW BROWSER!!! The browser will automatically minimize when Muse is set up.
+  - Muse will take a minute to setup. DO NOT INTERACT WITH THE NEW BROWSER EXCEPT FOR MINIMIZING IT!!! The browser will automatically minimize when Muse is set up.
+- The bot must be admitted by the meeting host.
 - Done (ツ) *Badum Tsss!*
 
 ## Using CLI
