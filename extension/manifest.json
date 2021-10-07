@@ -14,5 +14,6 @@
     },
     "action": {
         "default_title": "Activate Muse"
-    }
+    },
+    "icons": { "235" :"muse-modified.png"}
 }
