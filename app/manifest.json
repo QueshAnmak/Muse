@@ -4,6 +4,6 @@
     "path": "startMuse.bat",
     "type": "stdio",
     "allowed_origins": [
-        "chrome-extension://onhljmgokbcegppcgjpmgbfapkkeopnd/"
+        "chrome-extension://ohbfjpimmomnadalknneohmjodhffkdj/"
     ]
 }
